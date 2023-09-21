@@ -23,12 +23,8 @@ public class UserController {
 
     @PostMapping("get/id")
     private ResponseEntity<?> findById(@RequestBody Map<String, Object> request) {
-        try {
-            logger.info("in UserController.findById() : {}");
-            return new ResponseEntity<>(this.userService.getById(request), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        logger.info("in UserController.findById() : {}");
+        return new ResponseEntity<>(this.userService.getById(request), HttpStatus.OK);
     }
 
     @PostMapping("get/name")
@@ -61,7 +57,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("save")
+    @PostMapping("post/save")
     private ResponseEntity<?> addUser(@RequestBody Map<String, Object> request) {
         try {
             logger.info("in UserController.addUser() : {}");
@@ -71,23 +67,15 @@ public class UserController {
         }
     }
 
-    @PostMapping("update")
+    @PostMapping("put/update")
     private ResponseEntity<?> updateUser(@RequestBody Map<String, Object> request) {
-        try {
-            logger.info("in UserController.updateUser() : {}");
-            return new ResponseEntity<>(this.userService.update(request), HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        logger.info("in UserController.updateUser() : {}");
+        return new ResponseEntity<>(this.userService.update(request), HttpStatus.CREATED);
     }
 
-    @PostMapping("delete")
+    @PostMapping("delete/delete")
     private ResponseEntity<?> deleteUser(@RequestBody Map<String, Object> request) {
-        try {
-            logger.info("in UserController.deleteUser() : {}");
-            return new ResponseEntity<>(this.userService.delete(request), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        logger.info("in UserController.deleteUser() : {}");
+        return new ResponseEntity<>(this.userService.delete(request), HttpStatus.OK);
     }
 }

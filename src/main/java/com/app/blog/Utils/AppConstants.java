@@ -2,6 +2,13 @@ package com.app.blog.Utils;
 
 public class AppConstants {
 
+    // APP VARIABLES
+    public static final String ID = "ID";
+    public static final String EMAIL = "EMAIL";
+    public static final String NAME = "NAME";
+    public static final String USER = "USER";
+
+
     // APP CODES
     public static final String OK = "SUCCESS_200";
     public static final String CREATED = "SUCCESS_201";
@@ -21,8 +28,8 @@ public class AppConstants {
     public static final String MSG_EMAIL_AVAILABLE = "Requested email is available already!";
     public static final String MSG_NO_EMAIL_AVAILABLE = "There's no email available against the provided request!";
     public static final String MSG_NO_EMAIL_PROVIDED = "There's no email provided in the request!";
-    public static final String MSG_NO_NAME_PROVIDED = "There's no email name in the request!";
-    public static final String MSG_NO_NAME_AVAILABLE = "There's no name available against the provided request!";
+    public static final String MSG_NO_NAME_PROVIDED = "There's no name in the request!";
+    public static final String MSG_NO_NAME_AVAILABLE = "There's no user available against the provided requested name!";
     public static final String MSG_NO_PASSWORD_PROVIDED = "There's no password provided in the request!";
     public static final String MSG_NO_ABOUT_PROVIDED = "There's no about provided in the request!";
     public static final String MSG_USER_NOT_AVAILABLE = "Requested User not available!";
@@ -30,7 +37,6 @@ public class AppConstants {
     public static final String MSG_USER_DELETED_SUCCESSFULLY = "Requested User deleted Successfully!";
     public static final String MSG_USER_SAVED_SUCCESSFULLY = "Requested User saved Successfully!";
     public static final String MSG_USER_UPDATED_SUCCESSFULLY = "Requested User updated Successfully!";
-
 
 
 }

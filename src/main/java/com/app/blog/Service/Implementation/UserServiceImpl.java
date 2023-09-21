@@ -1,7 +1,7 @@
 package com.app.blog.Service.Implementation;
 
 import com.app.blog.Entity.Response;
-import com.app.blog.Exception.NotFoundException;
+import com.app.blog.Exception.ResourceNotFoundException;
 import com.app.blog.Model.User;
 import com.app.blog.Repository.UserRepository;
 import com.app.blog.Service.UserService;
@@ -32,34 +32,28 @@ public class UserServiceImpl implements UserService {
 
         User user = null;
 
-        try {
-            if (id == null || id == 0) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_ID_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-            user = this.userRepository.findById(id.longValue()).get();
-
-            if (user.getId() == null) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_ID_AVAILABLE);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            responseData.put("user", user);
-            response.setResponseCode(AppConstants.OK);
-            response.setResponseMessage(AppConstants.MSG_USER_FOUND_SUCCESSFULLY);
+        if (id == null || id == 0) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ID_PROVIDED);
             response.setResponseData(responseData);
-
-        } catch (Exception ex) {
-            logger.error("" + ex);
-            logger.error("in UserServiceImpl.getById() : {} - error");
-            ex.printStackTrace();
+            return response;
         }
+
+        user = this.userRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
+
+        if (user == null) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ID_AVAILABLE);
+            response.setResponseData(responseData);
+            return response;
+        }
+
+        responseData.put("user", user);
+        response.setResponseCode(AppConstants.OK);
+        response.setResponseMessage(AppConstants.MSG_USER_FOUND_SUCCESSFULLY);
+        response.setResponseData(responseData);
 
         logger.info("in UserServiceImpl.getById() : {} - end");
 
@@ -86,9 +80,10 @@ public class UserServiceImpl implements UserService {
                 response.setResponseData(responseData);
                 return response;
             }
+
             user = this.userRepository.findByName(name);
 
-            if (user.getName() == null) {
+            if (user == null) {
                 responseData.put("user", null);
                 response.setResponseCode(AppConstants.NOT_FOUND);
                 response.setResponseMessage(AppConstants.MSG_NO_NAME_AVAILABLE);
@@ -134,7 +129,7 @@ public class UserServiceImpl implements UserService {
             }
             user = this.userRepository.findByEmail(email);
 
-            if (user.getEmail() == null) {
+            if (user == null) {
                 responseData.put("user", null);
                 response.setResponseCode(AppConstants.NOT_FOUND);
                 response.setResponseMessage(AppConstants.MSG_NO_EMAIL_AVAILABLE);
@@ -229,71 +224,62 @@ public class UserServiceImpl implements UserService {
 
         User user = null;
 
-        try {
+        if (id == 0) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ID_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (name == null || name.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_NAME_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (email == null || email.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (password == null || password.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (about == null || about.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ABOUT_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
 
-            if (id == 0) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_ID_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-            if (name == null || name.isEmpty()) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_NAME_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-            if (email == null || email.isEmpty()) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-            if (password == null || password.isEmpty()) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-            if (about == null || about.isEmpty()) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_ABOUT_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
+        user = this.userRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
 
-            user = this.userRepository.findById(id.longValue()).get() != null
-                    ? this.userRepository.findById(id.longValue()).get()
-                    : null;
+        if (user == null) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_USER_NOT_AVAILABLE);
+            response.setResponseData(responseData);
+            return response;
+        } else {
+            user.setName(name);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setAbout(about);
 
-            if (user == null) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_USER_NOT_AVAILABLE);
-                response.setResponseData(responseData);
-                return response;
-            } else {
-                user.setName(name);
-                user.setEmail(email);
-                user.setPassword(password);
-                user.setAbout(about);
+            this.userRepository.save(user);
 
-                this.userRepository.save(user);
-
-                responseData.put("user", user);
-                response.setResponseCode(AppConstants.CREATED);
-                response.setResponseMessage(AppConstants.MSG_USER_UPDATED_SUCCESSFULLY);
-                response.setResponseData(responseData);
-            }
-        } catch (Exception ex) {
-            logger.error("" + ex);
-            logger.error("in UserServiceImpl.update() : {} - error");
-            ex.printStackTrace();
+            responseData.put("user", user);
+            response.setResponseCode(AppConstants.CREATED);
+            response.setResponseMessage(AppConstants.MSG_USER_UPDATED_SUCCESSFULLY);
+            response.setResponseData(responseData);
         }
 
         logger.info("in UserServiceImpl.update() : {} - end");
@@ -346,42 +332,31 @@ public class UserServiceImpl implements UserService {
         Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : 0;
 
         User user = null;
-        try {
 
-            if (id == 0) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_ID_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            user = this.userRepository.findById(id.longValue()).get();
-
-            if (user.getId() == null) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_ID_AVAILABLE);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            this.userRepository.deleteById(id.longValue());
-
-            responseData.put("user", user);
-            response.setResponseCode(AppConstants.OK);
-            response.setResponseMessage(AppConstants.MSG_USER_DELETED_SUCCESSFULLY);
+        if (id == 0) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ID_PROVIDED);
             response.setResponseData(responseData);
-
-        } catch (NotFoundException ex) {
-            logger.error("" + ex);
-            logger.error("in UserServiceImpl.delete() : {} - error");
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            logger.error("" + ex);
-            logger.error("in UserServiceImpl.delete() : {} - error");
-            ex.printStackTrace();
+            return response;
         }
+
+        user = this.userRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
+
+        if (user.getId() == null) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ID_AVAILABLE);
+            response.setResponseData(responseData);
+            return response;
+        }
+
+        this.userRepository.deleteById(id.longValue());
+
+        responseData.put("user", user);
+        response.setResponseCode(AppConstants.OK);
+        response.setResponseMessage(AppConstants.MSG_USER_DELETED_SUCCESSFULLY);
+        response.setResponseData(responseData);
 
         logger.info("in UserServiceImpl.delete() : {} - end");
 
