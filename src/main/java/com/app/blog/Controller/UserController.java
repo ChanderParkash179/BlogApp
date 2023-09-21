@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/blog/")
+@RequestMapping("api/blog/user/")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -49,9 +49,9 @@ public class UserController {
     }
 
     @PostMapping("get/list")
-    private ResponseEntity<?> findCities() {
+    private ResponseEntity<?> findAll() {
         try {
-            logger.info("in UserController.findUsers() : {}");
+            logger.info("in UserController.findAll() : {}");
             return new ResponseEntity<>(this.userService.list(), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,20 +59,20 @@ public class UserController {
     }
 
     @PostMapping("post/save")
-    private ResponseEntity<?> addUser(@Valid @RequestBody Map<String, Object> request) {
-        logger.info("in UserController.addUser() : {}");
+    private ResponseEntity<?> add(@Valid @RequestBody Map<String, Object> request) {
+        logger.info("in UserController.add() : {}");
         return new ResponseEntity<>(this.userService.save(request), HttpStatus.CREATED);
     }
 
     @PostMapping("put/update")
-    private ResponseEntity<?> updateUser(@Valid @RequestBody Map<String, Object> request) {
-        logger.info("in UserController.updateUser() : {}");
+    private ResponseEntity<?> update(@Valid @RequestBody Map<String, Object> request) {
+        logger.info("in UserController.update() : {}");
         return new ResponseEntity<>(this.userService.update(request), HttpStatus.CREATED);
     }
 
     @PostMapping("delete/delete")
-    private ResponseEntity<?> deleteUser(@Valid @RequestBody Map<String, Object> request) {
-        logger.info("in UserController.deleteUser() : {}");
+    private ResponseEntity<?> delete(@Valid @RequestBody Map<String, Object> request) {
+        logger.info("in UserController.delete() : {}");
         return new ResponseEntity<>(this.userService.delete(request), HttpStatus.OK);
     }
 }

@@ -7,12 +7,15 @@ public class AppConstants {
     public static final String EMAIL = "EMAIL";
     public static final String NAME = "NAME";
     public static final String USER = "USER";
+    public static final String CATEGORY = "CATEGORY";
 
     // APP VALIDATIONS
     public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 12 Characters!";
     public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 20 Characters!";
     public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 30 Characters!";
     public static final String FORMAT_EMAIL = "Email should be in proper Format!";
+    public static final String MINMAX_TITLE = "Title should contains minimum 4 & maximum 12 Characters!";
+    public static final String MINMAX_DESCRIPTION = "Description should contains minimum 6 & maximum 60 Characters!";
 
 
     // APP CODES
@@ -44,5 +47,16 @@ public class AppConstants {
     public static final String MSG_USER_SAVED_SUCCESSFULLY = "Requested User saved Successfully!";
     public static final String MSG_USER_UPDATED_SUCCESSFULLY = "Requested User updated Successfully!";
 
+    // [CATEGORY MESSAGES]
+
+    public static final String MSG_NO_TITLE_PROVIDED = "There's no title in the request!";
+    public static final String MSG_NO_DESCRIPTION_PROVIDED = "There's no description in the request!";
+    public static final String MSG_NO_TITLE_AVAILABLE = "There's no Category available against the requested title!";
+    public static final String MSG_CATEGORY_DELETED_SUCCESSFULLY = "Requested Category deleted Successfully!";
+    public static final String MSG_CATEGORY_FOUND_SUCCESSFULLY = "Requested Category found Successfully!";
+    public static final String MSG_CATEGORY_NOT_AVAILABLE = "Requested Category not available!";
+    public static final String MSG_CATEGORY_UPDATED_SUCCESSFULLY = "Requested Category updated Successfully!";
+    public static final String MSG_CATEGORY_SAVED_SUCCESSFULLY = "Requested Category saved Successfully!";
+    public static final String MSG_CATEGORY_AVAILABLE = "Requested Category is available already!";
 
 }
