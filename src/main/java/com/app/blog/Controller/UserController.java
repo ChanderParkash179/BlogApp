@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -22,13 +23,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("get/id")
-    private ResponseEntity<?> findById(@RequestBody Map<String, Object> request) {
+    private ResponseEntity<?> findById(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in UserController.findById() : {}");
         return new ResponseEntity<>(this.userService.getById(request), HttpStatus.OK);
     }
 
     @PostMapping("get/name")
-    private ResponseEntity<?> findByName(@RequestBody Map<String, Object> request) {
+    private ResponseEntity<?> findByName(@Valid @RequestBody Map<String, Object> request) {
         try {
             logger.info("in UserController.findByName() : {}");
             return new ResponseEntity<>(this.userService.getByName(request), HttpStatus.OK);
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("get/email")
-    private ResponseEntity<?> findByEmail(@RequestBody Map<String, Object> request) {
+    private ResponseEntity<?> findByEmail(@Valid @RequestBody Map<String, Object> request) {
         try {
             logger.info("in UserController.findByName() : {}");
             return new ResponseEntity<>(this.userService.getByEmail(request), HttpStatus.OK);
@@ -58,23 +59,19 @@ public class UserController {
     }
 
     @PostMapping("post/save")
-    private ResponseEntity<?> addUser(@RequestBody Map<String, Object> request) {
-        try {
-            logger.info("in UserController.addUser() : {}");
-            return new ResponseEntity<>(this.userService.save(request), HttpStatus.CREATED);
-        } catch (Exception ex) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    private ResponseEntity<?> addUser(@Valid @RequestBody Map<String, Object> request) {
+        logger.info("in UserController.addUser() : {}");
+        return new ResponseEntity<>(this.userService.save(request), HttpStatus.CREATED);
     }
 
     @PostMapping("put/update")
-    private ResponseEntity<?> updateUser(@RequestBody Map<String, Object> request) {
+    private ResponseEntity<?> updateUser(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in UserController.updateUser() : {}");
         return new ResponseEntity<>(this.userService.update(request), HttpStatus.CREATED);
     }
 
     @PostMapping("delete/delete")
-    private ResponseEntity<?> deleteUser(@RequestBody Map<String, Object> request) {
+    private ResponseEntity<?> deleteUser(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in UserController.deleteUser() : {}");
         return new ResponseEntity<>(this.userService.delete(request), HttpStatus.OK);
     }

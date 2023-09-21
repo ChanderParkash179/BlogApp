@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.app.blog.Entity.Response;
 import com.app.blog.Utils.AppConstants;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice(basePackages = "com.app.blog")
 public class GlobalException {
 
@@ -18,5 +20,14 @@ public class GlobalException {
         response.setResponseMessage(ex.getMessage());
         response.setResponseData(null);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Response> constraintViolationException(ConstraintViolationException ex) {
+        Response response = new Response();
+        response.setResponseCode(AppConstants.BAD_REQUEST);
+        response.setResponseMessage(ex.getMessage());
+        response.setResponseData(null);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

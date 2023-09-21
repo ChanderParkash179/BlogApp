@@ -168,39 +168,32 @@ public class UserServiceImpl implements UserService {
 
         User user = null;
 
-        try {
-            if (email == null || email.isEmpty()) {
-                responseData.put("user", null);
-                response.setResponseCode(AppConstants.BAD_REQUEST);
-                response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            } else {
+        if (email == null || email.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.BAD_REQUEST);
+            response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        } else {
 
-                User alreadyUserAvailable = this.userRepository.findByEmail(email);
+            User alreadyUserAvailable = this.userRepository.findByEmail(email);
 
-                if (alreadyUserAvailable != null) {
-                    responseData.put("User", alreadyUserAvailable);
-                    response.setResponseCode(AppConstants.BAD_REQUEST);
-                    response.setResponseMessage(AppConstants.MSG_EMAIL_AVAILABLE);
-                    response.setResponseData(responseData);
-                    return response;
-                }
-
-                user = new User(name, email, password, about);
-
-                this.userRepository.save(user);
-
-                responseData.put("user", user);
-                response.setResponseCode(AppConstants.CREATED);
-                response.setResponseMessage(AppConstants.MSG_USER_SAVED_SUCCESSFULLY);
+            if (alreadyUserAvailable != null) {
+                responseData.put("User", alreadyUserAvailable);
+                response.setResponseCode(AppConstants.FOUND);
+                response.setResponseMessage(AppConstants.MSG_EMAIL_AVAILABLE);
                 response.setResponseData(responseData);
                 return response;
             }
-        } catch (Exception ex) {
-            logger.error("" + ex);
-            logger.error("in UserServiceImpl.save() : {} - error");
-            ex.printStackTrace();
+
+            user = new User(name, email, password, about);
+
+            this.userRepository.save(user);
+
+            responseData.put("user", user);
+            response.setResponseCode(AppConstants.CREATED);
+            response.setResponseMessage(AppConstants.MSG_USER_SAVED_SUCCESSFULLY);
+            response.setResponseData(responseData);
         }
 
         logger.info("in UserServiceImpl.save() : {} - end");

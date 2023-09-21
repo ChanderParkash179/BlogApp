@@ -8,6 +8,12 @@ public class AppConstants {
     public static final String NAME = "NAME";
     public static final String USER = "USER";
 
+    // APP VALIDATIONS
+    public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 12 Characters!";
+    public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 20 Characters!";
+    public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 30 Characters!";
+    public static final String FORMAT_EMAIL = "Email should be in proper Format!";
+
 
     // APP CODES
     public static final String OK = "SUCCESS_200";
