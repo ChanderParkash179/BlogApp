@@ -1,6 +1,8 @@
 package com.app.blog.Controller;
 
 import com.app.blog.Service.PostService;
+import com.app.blog.Utils.AppConstants;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,15 +59,26 @@ public class PostController {
         }
     }
 
+    @PostMapping("get/search")
+    private ResponseEntity<?> search(@RequestBody Map<String, Object> request) {
+        try {
+            logger.info("in PostController.search() : {}");
+            return new ResponseEntity<>(this.postService.search(request), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("get/pagination/list")
     private ResponseEntity<?> findAllByPagination(
-            @RequestParam(value = "pageNo", defaultValue = "1", required = false) Integer pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
-            @RequestParam(value = "orderBy", defaultValue = "asc", required = false) String orderBy) {
+            @RequestParam(value = AppConstants.PAGE_NO, defaultValue = AppConstants.PAGE_NO_DEFAULT_VALUE, required = false) Integer pageNumber,
+            @RequestParam(value = AppConstants.PAGE_SIZE, defaultValue = AppConstants.PAGE_SIZE_DEFAULT_VALUE, required = false) Integer pageSize,
+            @RequestParam(value = AppConstants.SORT_BY, defaultValue = AppConstants.FIELD_ID, required = false) String sortBy,
+            @RequestParam(value = AppConstants.ORDER_BY, defaultValue = AppConstants.ORDER_BY_ASC, required = false) String orderBy) {
         try {
             logger.info("in PostController.findAllByPagination() : {}");
-            return new ResponseEntity<>(this.postService.pageableList(pageNumber, pageSize, sortBy, orderBy), HttpStatus.OK);
+            return new ResponseEntity<>(this.postService.pageableList(pageNumber, pageSize, sortBy, orderBy),
+                    HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

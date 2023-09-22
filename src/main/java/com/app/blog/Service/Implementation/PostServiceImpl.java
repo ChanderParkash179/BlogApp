@@ -472,7 +472,7 @@ public class PostServiceImpl implements PostService {
             Page<Post> pagePost = this.postRepository.findAll(pageable);
             List<Post> posts = pagePost.getContent();
 
-            if (pagePost.getContent() == null) {
+            if (pagePost.getContent().equals(null)) {
                 responseData.put("posts", null);
                 response.setResponseCode(AppConstants.NOT_FOUND);
                 response.setResponseMessage(AppConstants.MSG_POST_NOT_AVAILABLE);
@@ -547,6 +547,37 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Response search(Map<String, Object> input) {
-        return null;
+        logger.info("in PostServiceImpl.search() : {} - start");
+
+        Map<String, Object> responseData = new HashMap<>();
+        Response response = new Response();
+
+        String keyword = input.get("keyword") != null ? (String) input.get("keyword") : null;
+
+        try {
+            List<Post> posts = this.postRepository.search("%" + keyword + "%");
+
+            if (posts == null) {
+                responseData.put("posts", null);
+                response.setResponseCode(AppConstants.NOT_FOUND);
+                response.setResponseMessage(AppConstants.MSG_POST_NOT_AVAILABLE);
+                response.setResponseData(responseData);
+                return response;
+            }
+
+            responseData.put("posts", posts);
+            response.setResponseCode(AppConstants.OK);
+            response.setResponseMessage(AppConstants.MSG_POST_FOUND_SUCCESSFULLY);
+            response.setResponseData(responseData);
+
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex));
+            logger.error("in PostServiceImpl.search() : {} - error");
+            ex.printStackTrace();
+        }
+
+        logger.info("in PostServiceImpl.search() : {} - end");
+
+        return response;
     }
 }

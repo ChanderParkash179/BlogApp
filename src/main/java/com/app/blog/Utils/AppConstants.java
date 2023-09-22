@@ -9,6 +9,18 @@ public class AppConstants {
     public static final String USER = "USER";
     public static final String CATEGORY = "CATEGORY";
     public static final String POST = "POST";
+    
+    // EXTERNAL VARIABLES
+    public static final String PAGE_NO = "pageNo";
+    public static final String PAGE_SIZE = "pageSize";
+    public static final String SORT_BY = "sortBy";
+    public static final String ORDER_BY = "orderBy";
+    public static final String FIELD_ID = "id";
+    public static final String ORDER_BY_ASC = "asc";
+    
+    // SIZES
+    public static final String PAGE_NO_DEFAULT_VALUE = "1";
+    public static final String PAGE_SIZE_DEFAULT_VALUE = "5";
 
     // APP VALIDATIONS
     public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 12 Characters!";
