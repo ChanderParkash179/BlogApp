@@ -20,7 +20,10 @@ public interface PostService {
 
     Response list();
 
+    Response pageableList(Integer pageNumber, Integer pageSize, String sortBy, String orderBy);
+
     Response delete(Map<String, Object> input);
+
     Response search(Map<String, Object> input);
 
 }

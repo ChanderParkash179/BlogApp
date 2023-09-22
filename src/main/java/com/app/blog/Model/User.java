@@ -2,7 +2,6 @@ package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;

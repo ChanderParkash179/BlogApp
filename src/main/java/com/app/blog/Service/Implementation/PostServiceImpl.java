@@ -11,8 +11,13 @@ import com.app.blog.Repository.UserRepository;
 import com.app.blog.Service.PostService;
 import com.app.blog.Utils.AppConstants;
 import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -448,6 +453,51 @@ public class PostServiceImpl implements PostService {
         }
 
         logger.info("in PostServiceImpl.list() : {} - end");
+
+        return response;
+    }
+
+    @Override
+    public Response pageableList(Integer pageNumber, Integer pageSize, String sortBy, String orderBy) {
+        logger.info("in PostServiceImpl.pageableList() : {} - start");
+
+        Map<String, Object> responseData = new HashMap<>();
+        Response response = new Response();
+
+        try {
+
+            Sort sort = orderBy.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+
+            Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+            Page<Post> pagePost = this.postRepository.findAll(pageable);
+            List<Post> posts = pagePost.getContent();
+
+            if (pagePost.getContent() == null) {
+                responseData.put("posts", null);
+                response.setResponseCode(AppConstants.NOT_FOUND);
+                response.setResponseMessage(AppConstants.MSG_POST_NOT_AVAILABLE);
+                response.setResponseData(responseData);
+                return response;
+            }
+
+            responseData.put("posts", posts);
+            responseData.put("pageNumber", pagePost.getNumber());
+            responseData.put("pageSize", pagePost.getSize());
+            responseData.put("totalElements", pagePost.getTotalElements());
+            responseData.put("totalPages", pagePost.getTotalPages());
+            responseData.put("lastPage", pagePost.isLast());
+
+            response.setResponseCode(AppConstants.OK);
+            response.setResponseMessage(AppConstants.MSG_POST_FOUND_SUCCESSFULLY);
+            response.setResponseData(responseData);
+
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex));
+            logger.error("in PostServiceImpl.pageableList() : {} - error");
+            ex.printStackTrace();
+        }
+
+        logger.info("in PostServiceImpl.pageableList() : {} - end");
 
         return response;
     }

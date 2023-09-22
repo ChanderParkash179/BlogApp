@@ -42,7 +42,8 @@ public class CategoryServiceImpl implements CategoryService {
             return response;
         }
 
-        category = this.categoryRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY, AppConstants.ID, id.toString()));
+        category = this.categoryRepository.findById(id.longValue()).orElseThrow(
+                () -> new ResourceNotFoundException(AppConstants.CATEGORY, AppConstants.ID, id.toString()));
 
         if (category == null) {
             responseData.put("category", null);
@@ -191,7 +192,8 @@ public class CategoryServiceImpl implements CategoryService {
             return response;
         }
 
-        category = this.categoryRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY, AppConstants.ID, id.toString()));
+        category = this.categoryRepository.findById(id.longValue()).orElseThrow(
+                () -> new ResourceNotFoundException(AppConstants.CATEGORY, AppConstants.ID, id.toString()));
 
         if (category == null) {
             responseData.put("category", null);
@@ -200,7 +202,9 @@ public class CategoryServiceImpl implements CategoryService {
             response.setResponseData(responseData);
             return response;
         } else {
-            Category titleAvailable = this.categoryRepository.findByTitle(title) != null ? this.categoryRepository.findByTitle(title) : null;
+            Category titleAvailable = this.categoryRepository.findByTitle(title) != null
+                    ? this.categoryRepository.findByTitle(title)
+                    : null;
 
             if (titleAvailable == null) {
                 category.setTitle(title);
@@ -280,7 +284,8 @@ public class CategoryServiceImpl implements CategoryService {
             return response;
         }
 
-        category = this.categoryRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.CATEGORY, AppConstants.ID, id.toString()));
+        category = this.categoryRepository.findById(id.longValue()).orElseThrow(
+                () -> new ResourceNotFoundException(AppConstants.CATEGORY, AppConstants.ID, id.toString()));
 
         if (category.getId() == null) {
             responseData.put("category", null);

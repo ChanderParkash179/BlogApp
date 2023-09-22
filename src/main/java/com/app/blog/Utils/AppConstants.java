@@ -18,7 +18,6 @@ public class AppConstants {
     public static final String MINMAX_TITLE = "Title should contains minimum 4 & maximum 12 Characters!";
     public static final String MINMAX_DESCRIPTION = "Description should contains minimum 6 & maximum 60 Characters!";
 
-
     // APP CODES
     public static final String OK = "SUCCESS_200";
     public static final String CREATED = "SUCCESS_201";
@@ -50,7 +49,6 @@ public class AppConstants {
     public static final String MSG_USER_EMAIL_ALREADY_AVAILABLE = "Requested Email is already assigned to other User!";
 
     // [CATEGORY MESSAGES]
-
     public static final String MSG_NO_TITLE_PROVIDED = "There's no title in the request!";
     public static final String MSG_USER_TITLE_ALREADY_AVAILABLE = "Requested Title is already assigned to other Category!";
     public static final String MSG_NO_DESCRIPTION_PROVIDED = "There's no description in the request!";
@@ -63,7 +61,6 @@ public class AppConstants {
     public static final String MSG_CATEGORY_AVAILABLE = "Requested Category is available already!";
 
     // [POST MESSAGES]
-
     public static final String MSG_NO_CONTENT_PROVIDED = "There's no content in the request!";
     public static final String MSG_NO_IMAGE_URL_PROVIDED = "There's no image url in the request!";
     public static final String MSG_NO_CATEGORY_ID_PROVIDED = "There's no Category Id in the request!";
