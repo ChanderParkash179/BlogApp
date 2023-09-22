@@ -1,10 +1,14 @@
 package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "USER")
@@ -35,9 +39,13 @@ public class User {
     private String password;
 
     @NotEmpty
-    @Size(min = 10, max = 30, message = AppConstants.MINMAX_ABOUT)
-    @Column(name = "user_about")
+    @Size(min = 10, max = 60, message = AppConstants.MINMAX_ABOUT)
+    @Column(name = "user_about", length = 500)
     private String about;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
+    private List<Post> posts = new ArrayList<>();
 
     public User(String name, String email, String password, String about) {
         this.name = name;

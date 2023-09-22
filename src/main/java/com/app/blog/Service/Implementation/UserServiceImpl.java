@@ -262,17 +262,27 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
             return response;
         } else {
-            user.setName(name);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setAbout(about);
+            User emailAvailable = this.userRepository.findByEmail(email) != null ? this.userRepository.findByEmail(email) : null;
 
-            this.userRepository.save(user);
+            if (emailAvailable == null) {
+                user.setName(name);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setAbout(about);
 
-            responseData.put("user", user);
-            response.setResponseCode(AppConstants.CREATED);
-            response.setResponseMessage(AppConstants.MSG_USER_UPDATED_SUCCESSFULLY);
-            response.setResponseData(responseData);
+                this.userRepository.save(user);
+
+                responseData.put("user", user);
+                response.setResponseCode(AppConstants.CREATED);
+                response.setResponseMessage(AppConstants.MSG_USER_UPDATED_SUCCESSFULLY);
+                response.setResponseData(responseData);
+            } else {
+                responseData.put("user", emailAvailable);
+                response.setResponseCode(AppConstants.INTERNAL_SERVER_ERROR);
+                response.setResponseMessage(AppConstants.MSG_USER_EMAIL_ALREADY_AVAILABLE);
+                response.setResponseData(responseData);
+                return response;
+            }
         }
 
         logger.info("in UserServiceImpl.update() : {} - end");

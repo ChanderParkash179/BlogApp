@@ -100,11 +100,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         } catch (Exception ex) {
             logger.error("" + ex);
-            logger.error("in UserServiceImpl.getByName() : {} - error");
+            logger.error("in CategoryServiceImpl.getByName() : {} - error");
             ex.printStackTrace();
         }
 
-        logger.info("in UserServiceImpl.getByName() : {} - end");
+        logger.info("in CategoryServiceImpl.getByName() : {} - end");
 
         return response;
     }
@@ -196,19 +196,29 @@ public class CategoryServiceImpl implements CategoryService {
         if (category == null) {
             responseData.put("category", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
-            response.setResponseMessage(AppConstants.MSG_USER_NOT_AVAILABLE);
+            response.setResponseMessage(AppConstants.MSG_CATEGORY_NOT_AVAILABLE);
             response.setResponseData(responseData);
             return response;
         } else {
-            category.setTitle(title);
-            category.setDescription(description);
+            Category titleAvailable = this.categoryRepository.findByTitle(title) != null ? this.categoryRepository.findByTitle(title) : null;
 
-            this.categoryRepository.save(category);
+            if (titleAvailable == null) {
+                category.setTitle(title);
+                category.setDescription(description);
 
-            responseData.put("category", category);
-            response.setResponseCode(AppConstants.CREATED);
-            response.setResponseMessage(AppConstants.MSG_CATEGORY_UPDATED_SUCCESSFULLY);
-            response.setResponseData(responseData);
+                this.categoryRepository.save(category);
+
+                responseData.put("category", category);
+                response.setResponseCode(AppConstants.CREATED);
+                response.setResponseMessage(AppConstants.MSG_CATEGORY_UPDATED_SUCCESSFULLY);
+                response.setResponseData(responseData);
+            } else {
+                responseData.put("category", titleAvailable);
+                response.setResponseCode(AppConstants.INTERNAL_SERVER_ERROR);
+                response.setResponseMessage(AppConstants.MSG_USER_TITLE_ALREADY_AVAILABLE);
+                response.setResponseData(responseData);
+                return response;
+            }
         }
 
         logger.info("in CategoryServiceImpl.update() : {} - end");

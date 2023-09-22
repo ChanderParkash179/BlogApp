@@ -8,11 +8,12 @@ public class AppConstants {
     public static final String NAME = "NAME";
     public static final String USER = "USER";
     public static final String CATEGORY = "CATEGORY";
+    public static final String POST = "POST";
 
     // APP VALIDATIONS
     public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 12 Characters!";
     public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 20 Characters!";
-    public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 30 Characters!";
+    public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 60 Characters!";
     public static final String FORMAT_EMAIL = "Email should be in proper Format!";
     public static final String MINMAX_TITLE = "Title should contains minimum 4 & maximum 12 Characters!";
     public static final String MINMAX_DESCRIPTION = "Description should contains minimum 6 & maximum 60 Characters!";
@@ -46,10 +47,12 @@ public class AppConstants {
     public static final String MSG_USER_DELETED_SUCCESSFULLY = "Requested User deleted Successfully!";
     public static final String MSG_USER_SAVED_SUCCESSFULLY = "Requested User saved Successfully!";
     public static final String MSG_USER_UPDATED_SUCCESSFULLY = "Requested User updated Successfully!";
+    public static final String MSG_USER_EMAIL_ALREADY_AVAILABLE = "Requested Email is already assigned to other User!";
 
     // [CATEGORY MESSAGES]
 
     public static final String MSG_NO_TITLE_PROVIDED = "There's no title in the request!";
+    public static final String MSG_USER_TITLE_ALREADY_AVAILABLE = "Requested Title is already assigned to other Category!";
     public static final String MSG_NO_DESCRIPTION_PROVIDED = "There's no description in the request!";
     public static final String MSG_NO_TITLE_AVAILABLE = "There's no Category available against the requested title!";
     public static final String MSG_CATEGORY_DELETED_SUCCESSFULLY = "Requested Category deleted Successfully!";
@@ -58,5 +61,22 @@ public class AppConstants {
     public static final String MSG_CATEGORY_UPDATED_SUCCESSFULLY = "Requested Category updated Successfully!";
     public static final String MSG_CATEGORY_SAVED_SUCCESSFULLY = "Requested Category saved Successfully!";
     public static final String MSG_CATEGORY_AVAILABLE = "Requested Category is available already!";
+
+    // [POST MESSAGES]
+
+    public static final String MSG_NO_CONTENT_PROVIDED = "There's no content in the request!";
+    public static final String MSG_NO_IMAGE_URL_PROVIDED = "There's no image url in the request!";
+    public static final String MSG_NO_CATEGORY_ID_PROVIDED = "There's no Category Id in the request!";
+    public static final String MSG_NO_USER_ID_PROVIDED = "There's no User id in the request!";
+    public static final String MSG_POST_DELETED_SUCCESSFULLY = "Requested Post deleted Successfully!";
+    public static final String MSG_POST_FOUND_SUCCESSFULLY = "Requested Post found Successfully!";
+    public static final String MSG_POST_NOT_AVAILABLE = "Requested Post not available!";
+    public static final String MSG_POST_UPDATED_SUCCESSFULLY = "Requested Post updated Successfully!";
+    public static final String MSG_POST_SAVED_SUCCESSFULLY = "Requested Post saved Successfully!";
+    public static final String MSG_POST_AVAILABLE = "Requested Post is available already!";
+    public static final String MSG_NO_CATEGORY_AVAILABLE = "Requested Post's Category is not available!";
+    public static final String MSG_NO_USER_AVAILABLE = "Requested Post's User is not available!";
+    public static final String MSG_POST_FOUND_SUCCESSFULLY_AGAINST_CATEGORY = "Requested Posts found Successfully against the provided Category!";
+    public static final String MSG_POST_FOUND_SUCCESSFULLY_AGAINST_USER = "Requested Posts found Successfully against the provided User!";
 
 }
