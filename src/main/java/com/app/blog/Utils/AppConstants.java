@@ -9,7 +9,36 @@ public class AppConstants {
     public static final String USER = "USER";
     public static final String CATEGORY = "CATEGORY";
     public static final String POST = "POST";
-    
+    public static final String COMMENT = "COMMENT";
+
+    // SERVICE VARIABLES
+    // [USER]
+    public static final String USER_TABLE = "USER";
+    public static final String USER_ID = "user_id";
+    public static final String USER_NAME = "user_name";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_PASSWORD = "user_password";
+    public static final String USER_ABOUT = "user_about";
+
+    // [POST]
+    public static final String POST_TABLE = "POST";
+    public static final String POST_ID = "post_title";
+    public static final String POST_TITLE = "post_title";
+    public static final String POST_CONTENT = "post_content";
+    public static final String POST_IMG_URL = "post_imgUrl";
+    public static final String POST_ADDED_DATE = "post_addedDate";
+
+    // [CATEGORY]
+    public static final String CATEGORY_TABLE = "CATEGORY";
+    public static final String CATEGORY_ID = "category_id";
+    public static final String CATEGORY_TITLE = "category_title";
+    public static final String CATEGORY_DESCRIPTION = "category_description";
+
+    // [COMMENT]
+    public static final String COMMENT_TABLE = "COMMENT";
+    public static final String COMMENT_ID = "comment_id";
+    public static final String COMMENT_CONTENT = "comment_content";
+
     // EXTERNAL VARIABLES
     public static final String PAGE_NO = "pageNo";
     public static final String PAGE_SIZE = "pageSize";
@@ -17,7 +46,7 @@ public class AppConstants {
     public static final String ORDER_BY = "orderBy";
     public static final String FIELD_ID = "id";
     public static final String ORDER_BY_ASC = "asc";
-    
+
     // SIZES
     public static final String PAGE_NO_DEFAULT_VALUE = "1";
     public static final String PAGE_SIZE_DEFAULT_VALUE = "5";
@@ -28,7 +57,9 @@ public class AppConstants {
     public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 60 Characters!";
     public static final String FORMAT_EMAIL = "Email should be in proper Format!";
     public static final String MINMAX_TITLE = "Title should contains minimum 4 & maximum 12 Characters!";
+    public static final String MINMAX_CONTENT = "Content should contains minimum 6 & maximum 60 Characters!";
     public static final String MINMAX_DESCRIPTION = "Description should contains minimum 6 & maximum 60 Characters!";
+    public static final String CONTENT_MSG = "Content should contains minimum 6 & maximum 60 Characters!";
 
     // APP CODES
     public static final String OK = "SUCCESS_200";
@@ -87,5 +118,15 @@ public class AppConstants {
     public static final String MSG_NO_USER_AVAILABLE = "Requested Post's User is not available!";
     public static final String MSG_POST_FOUND_SUCCESSFULLY_AGAINST_CATEGORY = "Requested Posts found Successfully against the provided Category!";
     public static final String MSG_POST_FOUND_SUCCESSFULLY_AGAINST_USER = "Requested Posts found Successfully against the provided User!";
+
+    // [COMMENT MESSAGES]
+    public static final String MSG_COMMENT_FOUND_SUCCESSFULLY = "Requested Comment found Successfully!";
+    public static final String MSG_COMMENT_NOT_AVAILABLE = "Requested Comment not available!";
+    public static final String MSG_COMMENT_FOUND_SUCCESSFULLY_AGAINST_POST = "Requested Comments found Successfully against the provided Post!";
+    public static final String MSG_COMMENT_FOUND_SUCCESSFULLY_AGAINST_USER = "Requested Comments found Successfully against the provided User!";
+    public static final String MSG_NO_POST_ID_PROVIDED = "There's no Post Id in the request!";
+    public static final String MSG_COMMENT_SAVED_SUCCESSFULLY = "Requested Commented saved Successfully!";
+    public static final String MSG_COMMENT_DELETED_SUCCESSFULLY = "Requested Comment deleted Successfully!";
+    public static final String MSG_COMMENT_UPDATED_SUCCESSFULLY = "Requested Comment updated Successfully!";
 
 }

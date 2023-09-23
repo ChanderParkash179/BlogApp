@@ -189,38 +189,31 @@ public class PostServiceImpl implements PostService {
         List<Post> posts;
         User user;
 
-        try {
-            if (userId == 0) {
-                responseData.put("post", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_USER_ID_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            user = this.userRepository.findById(userId.longValue()).orElseThrow(
-                    () -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, userId.toString()));
-
-            posts = this.postRepository.findByUser(user);
-
-            if (posts == null) {
-                responseData.put("posts", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_USER_AVAILABLE);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            responseData.put("posts", posts);
-            response.setResponseCode(AppConstants.OK);
-            response.setResponseMessage(AppConstants.MSG_POST_FOUND_SUCCESSFULLY_AGAINST_USER);
+        if (userId == 0) {
+            responseData.put("post", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_USER_ID_PROVIDED);
             response.setResponseData(responseData);
-
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex));
-            logger.error("in PostServiceImpl.getByUser() : {} - error");
-            ex.printStackTrace();
+            return response;
         }
+
+        user = this.userRepository.findById(userId.longValue()).orElseThrow(
+                () -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, userId.toString()));
+
+        posts = this.postRepository.findByUser(user);
+
+        if (posts == null) {
+            responseData.put("posts", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_USER_AVAILABLE);
+            response.setResponseData(responseData);
+            return response;
+        }
+
+        responseData.put("posts", posts);
+        response.setResponseCode(AppConstants.OK);
+        response.setResponseMessage(AppConstants.MSG_POST_FOUND_SUCCESSFULLY_AGAINST_USER);
+        response.setResponseData(responseData);
 
         logger.info("in PostServiceImpl.getByUser() : {} - end");
 
@@ -398,10 +391,6 @@ public class PostServiceImpl implements PostService {
             user = this.userRepository.findById(userId.longValue())
                     .orElseThrow(
                             () -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, userId.toString()));
-
-            post = this.postRepository.findById(id.longValue())
-                    .orElseThrow(
-                            () -> new ResourceNotFoundException(AppConstants.POST, AppConstants.ID, id.toString()));
 
             post.setTitle(title);
             post.setContent(content);

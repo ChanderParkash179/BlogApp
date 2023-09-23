@@ -1,15 +1,17 @@
 package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "POST")
+@Table(name = AppConstants.POST_TABLE)
 @Setter
 @Getter
 @AllArgsConstructor
@@ -38,13 +40,17 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonManagedReference
+    @JsonIgnore
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonManagedReference
+    @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Comment> comments = new ArrayList<>();
 
     public Post(String title, String content, String imageUrl, String addedDate) {
         this.title = title;
