@@ -24,7 +24,7 @@ public class AppConstants {
     public static final String PAGE_SIZE_DEFAULT_VALUE = "5";
 
     // APP VALIDATIONS
-    public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 12 Characters!";
+    public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 100 Characters!";
     public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 20 Characters!";
     public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 60 Characters!";
     public static final String FORMAT_EMAIL = "Email should be in proper Format!";

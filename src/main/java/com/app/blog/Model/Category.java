@@ -36,7 +36,7 @@ public class Category {
     @Column(name = ModelConstants.CATEGORY_DESCRIPTION)
     private String description;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = ModelConstants.CATEGORY, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
