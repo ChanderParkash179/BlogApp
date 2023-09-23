@@ -1,6 +1,7 @@
 package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
+import com.app.blog.Utils.ModelConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = AppConstants.POST_TABLE)
+@Table(name = ModelConstants.POST_TABLE)
 @Setter
 @Getter
 @AllArgsConstructor
@@ -21,30 +22,30 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = ModelConstants.POST_ID)
     private Long id;
 
     @NotEmpty
     @Size(min = 3, max = 20, message = AppConstants.MINMAX_TITLE)
-    @Column(name = "post_title")
+    @Column(name = ModelConstants.POST_TITLE)
     private String title;
 
-    @Column(name = "post_content", length = 500)
+    @Column(name = ModelConstants.POST_CONTENT, length = 500)
     private String content;
 
-    @Column(name = "post_imgUrl")
+    @Column(name = ModelConstants.POST_IMG_URL)
     private String imageUrl;
 
-    @Column(name = "post_addedDate")
+    @Column(name = ModelConstants.POST_ADDED_DATE)
     private String addedDate;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = ModelConstants.CATEGORY_ID)
     @JsonIgnore
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = ModelConstants.USER_ID)
     @JsonIgnore
     private User user;
 

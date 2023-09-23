@@ -1,6 +1,7 @@
 package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
+import com.app.blog.Utils.ModelConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = AppConstants.COMMENT_TABLE)
+@Table(name = ModelConstants.COMMENT_TABLE)
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -20,21 +21,21 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = AppConstants.COMMENT_ID)
+    @Column(name = ModelConstants.COMMENT_ID)
     private Long id;
 
     @NotEmpty
     @Size(min = 6, max = 60, message = AppConstants.MINMAX_CONTENT)
-    @Column(name = AppConstants.COMMENT_CONTENT, length = 500)
+    @Column(name = ModelConstants.COMMENT_CONTENT, length = 500)
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = AppConstants.POST_ID)
+    @JoinColumn(name = ModelConstants.POST_ID)
     @JsonIgnore
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = AppConstants.USER_ID)
+    @JoinColumn(name = ModelConstants.USER_ID)
     @JsonIgnore
     private User user;
 

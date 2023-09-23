@@ -1,6 +1,7 @@
 package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
+import com.app.blog.Utils.ModelConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = ModelConstants.CATEGORY_TABLE)
 @Setter
 @Getter
 @AllArgsConstructor
@@ -22,17 +23,17 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = ModelConstants.CATEGORY_ID)
     private Long id;
 
     @NotEmpty
     @Size(min = 4, max = 12, message = AppConstants.MINMAX_TITLE)
-    @Column(name = "category_title", nullable = false, length = 100)
+    @Column(name = ModelConstants.CATEGORY_TITLE, nullable = false, length = 100)
     private String title;
 
     @NotEmpty
     @Size(min = 6, max = 100, message = AppConstants.MINMAX_DESCRIPTION)
-    @Column(name = "category_description")
+    @Column(name = ModelConstants.CATEGORY_DESCRIPTION)
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

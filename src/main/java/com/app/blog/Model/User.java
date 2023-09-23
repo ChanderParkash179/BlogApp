@@ -1,6 +1,7 @@
 package com.app.blog.Model;
 
 import com.app.blog.Utils.AppConstants;
+import com.app.blog.Utils.ModelConstants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.*;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "USER")
+@Table(name = ModelConstants.USER_TABLE)
 @Setter
 @Getter
 @AllArgsConstructor
@@ -21,26 +22,26 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = ModelConstants.USER_ID)
     private Long id;
 
     @NotEmpty
     @Size(min = 3, max = 20, message = AppConstants.MINMAX_NAME)
-    @Column(name = "user_name")
+    @Column(name = ModelConstants.USER_NAME)
     private String name;
 
     @Email(message = AppConstants.FORMAT_EMAIL)
-    @Column(name = "user_email")
+    @Column(name = ModelConstants.USER_EMAIL)
     private String email;
 
     @NotEmpty
     @Size(min = 6, max = 12, message = AppConstants.MINMAX_PASSWORD)
-    @Column(name = "user_password")
+    @Column(name = ModelConstants.USER_PASSWORD)
     private String password;
 
     @NotEmpty
     @Size(min = 10, max = 60, message = AppConstants.MINMAX_ABOUT)
-    @Column(name = "user_about", length = 500)
+    @Column(name = ModelConstants.USER_ABOUT, length = 500)
     private String about;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
