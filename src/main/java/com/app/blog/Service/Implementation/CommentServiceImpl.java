@@ -123,7 +123,7 @@ public class CommentServiceImpl implements CommentService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        Integer postId = input.get("postId") != null ? (Integer) input.get("postId") : null;
+        Integer postId = input.get("postId") != null ? (Integer) input.get("postId") : 0;
 
         List<Comment> comments;
         Post post;
@@ -174,7 +174,7 @@ public class CommentServiceImpl implements CommentService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        Integer userId = input.get("userId") != null ? (Integer) input.get("userId") : null;
+        Integer userId = input.get("userId") != null ? (Integer) input.get("userId") : 0;
 
         List<Comment> comments;
         User user;

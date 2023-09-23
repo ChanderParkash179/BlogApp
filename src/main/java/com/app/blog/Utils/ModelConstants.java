@@ -12,7 +12,7 @@ public class ModelConstants {
 
     // [POST]
     public static final String POST_TABLE = "POST";
-    public static final String POST_ID = "post_title";
+    public static final String POST_ID = "post_id";
     public static final String POST_TITLE = "post_title";
     public static final String POST_CONTENT = "post_content";
     public static final String POST_IMG_URL = "post_imgUrl";

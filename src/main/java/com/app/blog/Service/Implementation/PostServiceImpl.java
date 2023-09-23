@@ -133,7 +133,7 @@ public class PostServiceImpl implements PostService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        Integer categoryId = input.get("categoryId") != null ? (Integer) input.get("categoryId") : null;
+        Integer categoryId = input.get("categoryId") != null ? (Integer) input.get("categoryId") : 0;
 
         List<Post> posts;
         Category category;
@@ -184,7 +184,7 @@ public class PostServiceImpl implements PostService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        Integer userId = input.get("userId") != null ? (Integer) input.get("userId") : null;
+        Integer userId = input.get("userId") != null ? (Integer) input.get("userId") : 0;
 
         List<Post> posts;
         User user;
