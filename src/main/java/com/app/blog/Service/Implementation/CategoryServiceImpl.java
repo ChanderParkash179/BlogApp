@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        String title = (String) input.get("title") != null ? (String) input.get("title") : null;
+        String title = input.get("title") != null ? (String) input.get("title") : null;
 
         Category category = null;
 
@@ -100,7 +100,7 @@ public class CategoryServiceImpl implements CategoryService {
             response.setResponseData(responseData);
 
         } catch (Exception ex) {
-            logger.error("" + ex);
+            logger.error(String.valueOf(ex));
             logger.error("in CategoryServiceImpl.getByName() : {} - error");
             ex.printStackTrace();
         }
@@ -118,8 +118,8 @@ public class CategoryServiceImpl implements CategoryService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        String title = (String) input.get("title") != null ? (String) input.get("title") : null;
-        String description = (String) input.get("description") != null ? (String) input.get("description") : null;
+        String title = input.get("title") != null ? (String) input.get("title") : null;
+        String description = input.get("description") != null ? (String) input.get("description") : null;
 
         Category category = null;
 
@@ -165,8 +165,8 @@ public class CategoryServiceImpl implements CategoryService {
         Response response = new Response();
 
         Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : 0;
-        String title = (String) input.get("title") != null ? (String) input.get("title") : null;
-        String description = (String) input.get("description") != null ? (String) input.get("description") : null;
+        String title = input.get("title") != null ? (String) input.get("title") : null;
+        String description = input.get("description") != null ? (String) input.get("description") : null;
 
         Category category = null;
 
@@ -254,7 +254,7 @@ public class CategoryServiceImpl implements CategoryService {
             response.setResponseData(responseData);
 
         } catch (Exception ex) {
-            logger.error("" + ex);
+            logger.error(String.valueOf(ex));
             logger.error("in CategoryServiceImpl.list() : {} - error");
             ex.printStackTrace();
         }

@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        String name = (String) input.get("name") != null ? (String) input.get("name") : null;
+        String name = input.get("name") != null ? (String) input.get("name") : null;
 
         User user = null;
 
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
 
         } catch (Exception ex) {
-            logger.error("" + ex);
+            logger.error(String.valueOf(ex));
             logger.error("in UserServiceImpl.getByName() : {} - error");
             ex.printStackTrace();
         }
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        String email = (String) input.get("email") != null ? (String) input.get("email") : null;
+        String email = input.get("email") != null ? (String) input.get("email") : null;
 
         User user = null;
 
@@ -143,7 +143,7 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
 
         } catch (Exception ex) {
-            logger.error("" + ex);
+            logger.error(String.valueOf(ex));
             logger.error("in UserServiceImpl.getByEmail() : {} - error");
             ex.printStackTrace();
         }
@@ -161,10 +161,10 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        String email = (String) input.get("email") != null ? (String) input.get("email") : null;
-        String name = (String) input.get("name") != null ? (String) input.get("name") : null;
-        String password = (String) input.get("password") != null ? (String) input.get("password") : null;
-        String about = (String) input.get("about") != null ? (String) input.get("about") : null;
+        String email = input.get("email") != null ? (String) input.get("email") : null;
+        String name = input.get("name") != null ? (String) input.get("name") : null;
+        String password = input.get("password") != null ? (String) input.get("password") : null;
+        String about = input.get("about") != null ? (String) input.get("about") : null;
 
         User user = null;
 
@@ -210,12 +210,12 @@ public class UserServiceImpl implements UserService {
         Response response = new Response();
 
         Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : 0;
-        String name = (String) input.get("name") != null ? (String) input.get("name") : null;
-        String email = (String) input.get("email") != null ? (String) input.get("email") : null;
-        String password = (String) input.get("password") != null ? (String) input.get("password") : null;
-        String about = (String) input.get("about") != null ? (String) input.get("about") : null;
+        String name = input.get("name") != null ? (String) input.get("name") : null;
+        String email = input.get("email") != null ? (String) input.get("email") : null;
+        String password = input.get("password") != null ? (String) input.get("password") : null;
+        String about = input.get("about") != null ? (String) input.get("about") : null;
 
-        User user = null;
+        User user;
 
         if (id == 0) {
             responseData.put("user", null);
@@ -314,7 +314,7 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
 
         } catch (Exception ex) {
-            logger.error("" + ex);
+            logger.error(String.valueOf(ex));
             logger.error("in UserServiceImpl.list() : {} - error");
             ex.printStackTrace();
         }
