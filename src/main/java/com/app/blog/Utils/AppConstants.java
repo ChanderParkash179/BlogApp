@@ -2,6 +2,25 @@ package com.app.blog.Utils;
 
 public class AppConstants {
 
+    // LENGTH
+    public static final Integer NUM_01 = 1;
+    public static final Integer NUM_02 = 2;
+    public static final Integer NUM_03 = 3;
+    public static final Integer NUM_04 = 4;
+    public static final Integer NUM_05 = 5;
+    public static final Integer NUM_06 = 6;
+    public static final Integer NUM_08 = 8;
+    public static final Integer NUM_09 = 9;
+    public static final Integer NUM_10 = 10;
+    public static final Integer NUM_12 = 12;
+    public static final Integer NUM_14 = 14;
+    public static final Integer NUM_16 = 16;
+    public static final Integer NUM_18 = 18;
+    public static final Integer NUM_20 = 20;
+    public static final Integer NUM_60 = 60;
+    public static final Integer NUM_100 = 100;
+    public static final Integer NUM_500 = 500;
+
     // APP VARIABLES
     public static final String ID = "ID";
     public static final String EMAIL = "EMAIL";
@@ -25,8 +44,9 @@ public class AppConstants {
 
     // APP VALIDATIONS
     public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 100 Characters!";
-    public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 20 Characters!";
+    public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 10 Characters!";
     public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 60 Characters!";
+    public static final String VALID_ROLE = "Role should not be empty!";
     public static final String FORMAT_EMAIL = "Email should be in proper Format!";
     public static final String MINMAX_TITLE = "Title should contains minimum 4 & maximum 12 Characters!";
     public static final String MINMAX_CONTENT = "Content should contains minimum 6 & maximum 60 Characters!";
@@ -52,8 +72,10 @@ public class AppConstants {
     public static final String MSG_EMAIL_AVAILABLE = "Requested email is available already!";
     public static final String MSG_NO_EMAIL_AVAILABLE = "There's no email available against the provided request!";
     public static final String MSG_NO_EMAIL_PROVIDED = "There's no email provided in the request!";
-    public static final String MSG_NO_NAME_PROVIDED = "There's no name in the request!";
-    public static final String MSG_NO_NAME_AVAILABLE = "There's no user available against the provided requested name!";
+    public static final String MSG_NO_FIRST_NAME_PROVIDED = "There's no first name in the request!";
+    public static final String MSG_NO_LAST_NAME_PROVIDED = "There's no last name in the request!";
+    public static final String MSG_NO_FIRST_NAME_AVAILABLE = "There's no user available against the provided requested name!";
+    public static final String MSG_NO_LAST_NAME_AVAILABLE = "There's no user available against the provided requested name!";
     public static final String MSG_NO_PASSWORD_PROVIDED = "There's no password provided in the request!";
     public static final String MSG_NO_ABOUT_PROVIDED = "There's no about provided in the request!";
     public static final String MSG_USER_NOT_AVAILABLE = "Requested User not available!";

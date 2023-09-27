@@ -26,37 +26,49 @@ public class User {
     private Long id;
 
     @NotEmpty
-    @Size(min = 3, max = 20, message = AppConstants.MINMAX_NAME)
-    @Column(name = ModelConstants.USER_NAME)
-    private String name;
+    @Size(min = 3, max = 10, message = AppConstants.MINMAX_NAME)
+    @Column(name = ModelConstants.USER_FIRST_NAME)
+    private String firstName;
+
+    @NotEmpty
+    @Size(min = 3, max = 10, message = AppConstants.MINMAX_NAME)
+    @Column(name = ModelConstants.USER_LAST_NAME)
+    private String lastName;
 
     @Email(message = AppConstants.FORMAT_EMAIL)
     @Column(name = ModelConstants.USER_EMAIL)
     private String email;
 
     @NotEmpty
-    @Size(min = 6, max = 12, message = AppConstants.MINMAX_PASSWORD)
-    @Column(name = ModelConstants.USER_PASSWORD)
+    @Size(min = AppConstants.NUM_06, max = AppConstants.NUM_12, message = AppConstants.MINMAX_PASSWORD)
+    @Column(name = ModelConstants.USER_PASSWORD, length = AppConstants.NUM_60)
     private String password;
 
     @NotEmpty
-    @Size(min = 10, max = 60, message = AppConstants.MINMAX_ABOUT)
-    @Column(name = ModelConstants.USER_ABOUT, length = 500)
+    @Size(min = AppConstants.NUM_10, max = AppConstants.NUM_60, message = AppConstants.MINMAX_ABOUT)
+    @Column(name = ModelConstants.USER_ABOUT, length = AppConstants.NUM_500)
     private String about;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @NotEmpty
+    @Size(min = AppConstants.NUM_04, max = AppConstants.NUM_16, message = AppConstants.VALID_ROLE)
+    @Column(name = ModelConstants.USER_ROLE)
+    private String role;
+
+    @OneToMany(mappedBy = ModelConstants.USER, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = ModelConstants.USER, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
-    public User(String name, String email, String password, String about) {
-        this.name = name;
+    public User(String firstName, String lastName, String email, String password, String about, String role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.about = about;
+        this.role = role;
     }
 
     public User(String email, String password) {

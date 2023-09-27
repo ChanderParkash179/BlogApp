@@ -6,8 +6,10 @@ public class ModelConstants {
     public static final String USER = "user";
     public static final String USER_TABLE = "USER";
     public static final String USER_ID = "user_id";
-    public static final String USER_NAME = "user_name";
+    public static final String USER_FIRST_NAME = "user_last_name";
+    public static final String USER_LAST_NAME = "user_first_name";
     public static final String USER_EMAIL = "user_email";
+    public static final String USER_ROLE = "user_role";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_ABOUT = "user_about";
 
@@ -32,11 +34,5 @@ public class ModelConstants {
     public static final String COMMENT_TABLE = "COMMENT";
     public static final String COMMENT_ID = "comment_id";
     public static final String COMMENT_CONTENT = "comment_content";
-
-    // [ROLE]
-    public static final String ROLE = "role";
-    public static final String ROLE_TABLE = "ROLE";
-    public static final String ROLE_ID = "role_id";
-    public static final String ROLE_NAME = "role_name";
 
 }

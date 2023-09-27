@@ -28,11 +28,20 @@ public class UserController {
         return new ResponseEntity<>(this.userService.getById(request), HttpStatus.OK);
     }
 
-    @PostMapping("get/name")
-    private ResponseEntity<?> findByName(@Valid @RequestBody Map<String, Object> request) {
+    @PostMapping("get/first")
+    private ResponseEntity<?> findByFirstName(@Valid @RequestBody Map<String, Object> request) {
         try {
-            logger.info("in UserController.findByName() : {}");
-            return new ResponseEntity<>(this.userService.getByName(request), HttpStatus.OK);
+            logger.info("in UserController.findByFirstName() : {}");
+            return new ResponseEntity<>(this.userService.getByFirstName(request), HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("get/last")
+    private ResponseEntity<?> findByLastName(@Valid @RequestBody Map<String, Object> request) {
+        try {
+            logger.info("in UserController.findByLastName() : {}");
+            return new ResponseEntity<>(this.userService.getByLastName(request), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

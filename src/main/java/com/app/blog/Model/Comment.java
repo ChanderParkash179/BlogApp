@@ -25,8 +25,8 @@ public class Comment {
     private Long id;
 
     @NotEmpty
-    @Size(min = 6, max = 60, message = AppConstants.MINMAX_CONTENT)
-    @Column(name = ModelConstants.COMMENT_CONTENT, length = 500)
+    @Size(min = AppConstants.NUM_06, max = AppConstants.NUM_60, message = AppConstants.MINMAX_CONTENT)
+    @Column(name = ModelConstants.COMMENT_CONTENT, length = AppConstants.NUM_500)
     private String content;
 
     @ManyToOne

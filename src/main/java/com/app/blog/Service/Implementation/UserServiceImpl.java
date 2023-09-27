@@ -6,12 +6,14 @@ import com.app.blog.Model.User;
 import com.app.blog.Repository.UserRepository;
 import com.app.blog.Service.UserService;
 import com.app.blog.Utils.AppConstants;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
+
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +42,8 @@ public class UserServiceImpl implements UserService {
             return response;
         }
 
-        user = this.userRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
+        user = this.userRepository.findById(id.longValue())
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
 
         if (user == null) {
             responseData.put("user", null);
@@ -61,32 +64,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response getByName(Map<String, Object> input) {
+    public Response getByFirstName(Map<String, Object> input) {
 
-        logger.info("in UserServiceImpl.getByName() : {} - start");
+        logger.info("in UserServiceImpl.getByFirstName() : {} - start");
 
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        String name = input.get("name") != null ? (String) input.get("name") : null;
+        String firstName = input.get("firstName") != null ? (String) input.get("firstName") : null;
 
         User user = null;
 
         try {
-            if (name == null || name.isEmpty()) {
+            if (firstName == null || firstName.isEmpty()) {
                 responseData.put("user", null);
                 response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_NAME_PROVIDED);
+                response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_PROVIDED);
                 response.setResponseData(responseData);
                 return response;
             }
 
-            user = this.userRepository.findByName(name);
+            user = this.userRepository.findByFirstName(firstName);
 
             if (user == null) {
                 responseData.put("user", null);
                 response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_NAME_AVAILABLE);
+                response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_AVAILABLE);
                 response.setResponseData(responseData);
                 return response;
             }
@@ -98,11 +101,58 @@ public class UserServiceImpl implements UserService {
 
         } catch (Exception ex) {
             logger.error(String.valueOf(ex));
-            logger.error("in UserServiceImpl.getByName() : {} - error");
+            logger.error("in UserServiceImpl.getByFirstName() : {} - error");
             ex.printStackTrace();
         }
 
-        logger.info("in UserServiceImpl.getByName() : {} - end");
+        logger.info("in UserServiceImpl.getByFirstName() : {} - end");
+
+        return response;
+    }
+
+    @Override
+    public Response getByLastName(Map<String, Object> input) {
+
+        logger.info("in UserServiceImpl.getByLastName() : {} - start");
+
+        Map<String, Object> responseData = new HashMap<>();
+        Response response = new Response();
+
+        String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
+
+        User user = null;
+
+        try {
+            if (lastName == null || lastName.isEmpty()) {
+                responseData.put("user", null);
+                response.setResponseCode(AppConstants.NOT_FOUND);
+                response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_PROVIDED);
+                response.setResponseData(responseData);
+                return response;
+            }
+
+            user = this.userRepository.findByLastName(lastName);
+
+            if (user == null) {
+                responseData.put("user", null);
+                response.setResponseCode(AppConstants.NOT_FOUND);
+                response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_AVAILABLE);
+                response.setResponseData(responseData);
+                return response;
+            }
+
+            responseData.put("user", user);
+            response.setResponseCode(AppConstants.OK);
+            response.setResponseMessage(AppConstants.MSG_USER_FOUND_SUCCESSFULLY);
+            response.setResponseData(responseData);
+
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex));
+            logger.error("in UserServiceImpl.getByLastName() : {} - error");
+            ex.printStackTrace();
+        }
+
+        logger.info("in UserServiceImpl.getByLastName() : {} - end");
 
         return response;
     }
@@ -162,9 +212,11 @@ public class UserServiceImpl implements UserService {
         Response response = new Response();
 
         String email = input.get("email") != null ? (String) input.get("email") : null;
-        String name = input.get("name") != null ? (String) input.get("name") : null;
+        String firstName = input.get("firstName") != null ? (String) input.get("firstName") : null;
+        String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
+        String role = input.get("role") != null ? (String) input.get("role") : "LOCAL_USER";
 
         User user = null;
 
@@ -186,7 +238,7 @@ public class UserServiceImpl implements UserService {
                 return response;
             }
 
-            user = new User(name, email, password, about);
+            user = new User(firstName, lastName, email, password, about, role);
 
             this.userRepository.save(user);
 
@@ -210,10 +262,12 @@ public class UserServiceImpl implements UserService {
         Response response = new Response();
 
         Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : 0;
-        String name = input.get("name") != null ? (String) input.get("name") : null;
         String email = input.get("email") != null ? (String) input.get("email") : null;
+        String firstName = input.get("firstName") != null ? (String) input.get("firstName") : null;
+        String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
+        String role = input.get("role") != null ? (String) input.get("role") : "LOCAL_USER";
 
         User user;
 
@@ -224,10 +278,17 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
             return response;
         }
-        if (name == null || name.isEmpty()) {
+        if (firstName == null || firstName.isEmpty()) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
-            response.setResponseMessage(AppConstants.MSG_NO_NAME_PROVIDED);
+            response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
@@ -253,7 +314,8 @@ public class UserServiceImpl implements UserService {
             return response;
         }
 
-        user = this.userRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
+        user = this.userRepository.findById(id.longValue())
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
 
         if (user == null) {
             responseData.put("user", null);
@@ -262,13 +324,17 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
             return response;
         } else {
-            User emailAvailable = this.userRepository.findByEmail(email) != null ? this.userRepository.findByEmail(email) : null;
+            User emailAvailable = this.userRepository.findByEmail(email) != null
+                    ? this.userRepository.findByEmail(email)
+                    : null;
 
             if (emailAvailable == null) {
-                user.setName(name);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
                 user.setEmail(email);
                 user.setPassword(password);
                 user.setAbout(about);
+                user.setRole(role);
 
                 this.userRepository.save(user);
 
@@ -344,7 +410,8 @@ public class UserServiceImpl implements UserService {
             return response;
         }
 
-        user = this.userRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
+        user = this.userRepository.findById(id.longValue())
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
 
         if (user.getId() == null) {
             responseData.put("user", null);

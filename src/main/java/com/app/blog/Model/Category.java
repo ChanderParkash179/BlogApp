@@ -27,12 +27,12 @@ public class Category {
     private Long id;
 
     @NotEmpty
-    @Size(min = 4, max = 12, message = AppConstants.MINMAX_TITLE)
-    @Column(name = ModelConstants.CATEGORY_TITLE, nullable = false, length = 100)
+    @Size(min = AppConstants.NUM_04, max = AppConstants.NUM_12, message = AppConstants.MINMAX_TITLE)
+    @Column(name = ModelConstants.CATEGORY_TITLE, nullable = false, length = AppConstants.NUM_100)
     private String title;
 
     @NotEmpty
-    @Size(min = 6, max = 100, message = AppConstants.MINMAX_DESCRIPTION)
+    @Size(min = AppConstants.NUM_06, max = AppConstants.NUM_100, message = AppConstants.MINMAX_DESCRIPTION)
     @Column(name = ModelConstants.CATEGORY_DESCRIPTION)
     private String description;
 

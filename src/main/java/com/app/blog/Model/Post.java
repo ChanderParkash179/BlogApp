@@ -26,11 +26,11 @@ public class Post {
     private Long id;
 
     @NotEmpty
-    @Size(min = 3, max = 20, message = AppConstants.MINMAX_TITLE)
+    @Size(min = AppConstants.NUM_03, max = AppConstants.NUM_20, message = AppConstants.MINMAX_TITLE)
     @Column(name = ModelConstants.POST_TITLE)
     private String title;
 
-    @Column(name = ModelConstants.POST_CONTENT, length = 500)
+    @Column(name = ModelConstants.POST_CONTENT, length = AppConstants.NUM_500)
     private String content;
 
     @Column(name = ModelConstants.POST_IMG_URL)
