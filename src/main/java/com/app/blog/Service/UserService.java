@@ -6,9 +6,12 @@ import java.util.*;
 
 public interface UserService {
 
+    Response register(Map<String, Object> input);
+
     Response getById(Map<String, Object> input);
 
     Response getByFirstName(Map<String, Object> input);
+
     Response getByLastName(Map<String, Object> input);
 
     Response getByEmail(Map<String, Object> input);

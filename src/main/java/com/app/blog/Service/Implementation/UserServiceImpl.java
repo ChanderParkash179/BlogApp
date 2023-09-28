@@ -14,13 +14,90 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
+
+    @Override
+    public Response register(Map<String, Object> input) {
+
+        logger.info("in UserServiceImpl.register() : {} - start");
+
+        Map<String, Object> responseData = new HashMap<>();
+        Response response = new Response();
+
+        String email = input.get("email") != null ? (String) input.get("email") : null;
+        String firstName = input.get("firstName") != null ? (String) input.get("firstName") : null;
+        String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
+        String password = input.get("password") != null ? (String) input.get("password") : null;
+        String about = input.get("about") != null ? (String) input.get("about") : null;
+        String role = "API_USER";
+
+        User user = null;
+
+        if (firstName == null || firstName.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (email == null || email.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (password == null || password.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (about == null || about.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ABOUT_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        } else {
+
+            User alreadyUserAvailable = this.userRepository.findByEmail(email);
+
+            if (alreadyUserAvailable != null) {
+                responseData.put("User", alreadyUserAvailable);
+                response.setResponseCode(AppConstants.FOUND);
+                response.setResponseMessage(AppConstants.MSG_EMAIL_AVAILABLE);
+                response.setResponseData(responseData);
+                return response;
+            }
+
+            user = new User(firstName, lastName, email, password, about, role);
+
+            this.userRepository.save(user);
+
+            responseData.put("user", user);
+            response.setResponseCode(AppConstants.CREATED);
+            response.setResponseMessage(AppConstants.MSG_USER_SAVED_SUCCESSFULLY);
+            response.setResponseData(responseData);
+        }
+
+        logger.info("in UserServiceImpl.register() : {} - end");
+
+        return response;
+    }
 
     @Override
     public Response getById(Map<String, Object> input) {
@@ -220,10 +297,38 @@ public class UserServiceImpl implements UserService {
 
         User user = null;
 
+        if (firstName == null || firstName.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (lastName == null || lastName.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
         if (email == null || email.isEmpty()) {
             responseData.put("user", null);
-            response.setResponseCode(AppConstants.BAD_REQUEST);
+            response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (password == null || password.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+        if (about == null || about.isEmpty()) {
+            responseData.put("user", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_ABOUT_PROVIDED);
             response.setResponseData(responseData);
             return response;
         } else {

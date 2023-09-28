@@ -3,23 +3,23 @@ package com.app.blog.Utils;
 public class AppConstants {
 
     // LENGTH
-    public static final Integer NUM_01 = 1;
-    public static final Integer NUM_02 = 2;
-    public static final Integer NUM_03 = 3;
-    public static final Integer NUM_04 = 4;
-    public static final Integer NUM_05 = 5;
-    public static final Integer NUM_06 = 6;
-    public static final Integer NUM_08 = 8;
-    public static final Integer NUM_09 = 9;
-    public static final Integer NUM_10 = 10;
-    public static final Integer NUM_12 = 12;
-    public static final Integer NUM_14 = 14;
-    public static final Integer NUM_16 = 16;
-    public static final Integer NUM_18 = 18;
-    public static final Integer NUM_20 = 20;
-    public static final Integer NUM_60 = 60;
-    public static final Integer NUM_100 = 100;
-    public static final Integer NUM_500 = 500;
+    public static final int NUM_01 = 1;
+    public static final int NUM_02 = 2;
+    public static final int NUM_03 = 3;
+    public static final int NUM_04 = 4;
+    public static final int NUM_05 = 5;
+    public static final int NUM_06 = 6;
+    public static final int NUM_08 = 8;
+    public static final int NUM_09 = 9;
+    public static final int NUM_10 = 10;
+    public static final int NUM_12 = 12;
+    public static final int NUM_14 = 14;
+    public static final int NUM_16 = 16;
+    public static final int NUM_18 = 18;
+    public static final int NUM_20 = 20;
+    public static final int NUM_60 = 60;
+    public static final int NUM_100 = 100;
+    public static final int NUM_500 = 500;
 
     // APP VARIABLES
     public static final String ID = "ID";

@@ -22,6 +22,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @PostMapping("post/register")
+    private ResponseEntity<?> register(@Valid @RequestBody Map<String, Object> request) {
+        logger.info("in UserController.register() : {}");
+        return new ResponseEntity<>(this.userService.register(request), HttpStatus.OK);
+    }
+
     @PostMapping("get/id")
     private ResponseEntity<?> findById(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in UserController.findById() : {}");
@@ -37,6 +43,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PostMapping("get/last")
     private ResponseEntity<?> findByLastName(@Valid @RequestBody Map<String, Object> request) {
         try {
