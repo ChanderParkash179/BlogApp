@@ -8,7 +8,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = ModelConstants.COMMENT_TABLE)
@@ -24,8 +23,7 @@ public class Comment {
     @Column(name = ModelConstants.COMMENT_ID)
     private Long id;
 
-    @NotEmpty
-    @Size(min = AppConstants.NUM_06, max = AppConstants.NUM_60, message = AppConstants.MINMAX_CONTENT)
+    @NotEmpty(message = AppConstants.MINMAX_CONTENT)
     @Column(name = ModelConstants.COMMENT_CONTENT, length = AppConstants.NUM_500)
     private String content;
 

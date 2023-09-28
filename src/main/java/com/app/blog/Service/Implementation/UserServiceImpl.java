@@ -12,6 +12,7 @@ import java.util.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Response register(Map<String, Object> input) {
@@ -34,9 +36,10 @@ public class UserServiceImpl implements UserService {
         String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
-        String role = "API_USER";
+        String role = input.get("role") != null ? (String) input.get("role") : "USER";
+        String source = input.get("source") != null ? (String) input.get("source") : "API_USER";
 
-        User user = null;
+        User user;
 
         if (firstName == null || firstName.isEmpty()) {
             responseData.put("user", null);
@@ -74,23 +77,23 @@ public class UserServiceImpl implements UserService {
             return response;
         } else {
 
-            User alreadyUserAvailable = this.userRepository.findByEmail(email);
+            User availableEmail = this.userRepository.findByEmail(email);
 
-            if (alreadyUserAvailable != null) {
-                responseData.put("User", alreadyUserAvailable);
+            if (availableEmail != null) {
+                responseData.put("user", availableEmail);
                 response.setResponseCode(AppConstants.FOUND);
                 response.setResponseMessage(AppConstants.MSG_EMAIL_AVAILABLE);
                 response.setResponseData(responseData);
                 return response;
             }
 
-            user = new User(firstName, lastName, email, password, about, role);
+            user = new User(firstName, lastName, email, passwordEncoder.encode(password), about, role, source);
 
             this.userRepository.save(user);
 
             responseData.put("user", user);
             response.setResponseCode(AppConstants.CREATED);
-            response.setResponseMessage(AppConstants.MSG_USER_SAVED_SUCCESSFULLY);
+            response.setResponseMessage(AppConstants.MSG_USER_REGISTERED_SUCCESSFULLY);
             response.setResponseData(responseData);
         }
 
@@ -109,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
         Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : null;
 
-        User user = null;
+        User user;
 
         if (id == null || id == 0) {
             responseData.put("user", null);
@@ -150,7 +153,7 @@ public class UserServiceImpl implements UserService {
 
         String firstName = input.get("firstName") != null ? (String) input.get("firstName") : null;
 
-        User user = null;
+        User user;
 
         try {
             if (firstName == null || firstName.isEmpty()) {
@@ -197,7 +200,7 @@ public class UserServiceImpl implements UserService {
 
         String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
 
-        User user = null;
+        User user;
 
         try {
             if (lastName == null || lastName.isEmpty()) {
@@ -244,7 +247,7 @@ public class UserServiceImpl implements UserService {
 
         String email = input.get("email") != null ? (String) input.get("email") : null;
 
-        User user = null;
+        User user;
 
         try {
             if (email == null || email.isEmpty()) {
@@ -293,9 +296,10 @@ public class UserServiceImpl implements UserService {
         String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
-        String role = input.get("role") != null ? (String) input.get("role") : "LOCAL_USER";
+        String role = input.get("role") != null ? (String) input.get("role") : "USER";
+        String source = input.get("source") != null ? (String) input.get("source") : "MANUAL_USER";
 
-        User user = null;
+        User user;
 
         if (firstName == null || firstName.isEmpty()) {
             responseData.put("user", null);
@@ -331,27 +335,26 @@ public class UserServiceImpl implements UserService {
             response.setResponseMessage(AppConstants.MSG_NO_ABOUT_PROVIDED);
             response.setResponseData(responseData);
             return response;
-        } else {
-
-            User alreadyUserAvailable = this.userRepository.findByEmail(email);
-
-            if (alreadyUserAvailable != null) {
-                responseData.put("User", alreadyUserAvailable);
-                response.setResponseCode(AppConstants.FOUND);
-                response.setResponseMessage(AppConstants.MSG_EMAIL_AVAILABLE);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            user = new User(firstName, lastName, email, password, about, role);
-
-            this.userRepository.save(user);
-
-            responseData.put("user", user);
-            response.setResponseCode(AppConstants.CREATED);
-            response.setResponseMessage(AppConstants.MSG_USER_SAVED_SUCCESSFULLY);
-            response.setResponseData(responseData);
         }
+
+        User alreadyUserAvailable = this.userRepository.findByEmail(email);
+
+        if (alreadyUserAvailable != null) {
+            responseData.put("user", alreadyUserAvailable);
+            response.setResponseCode(AppConstants.FOUND);
+            response.setResponseMessage(AppConstants.MSG_EMAIL_AVAILABLE);
+            response.setResponseData(responseData);
+            return response;
+        }
+
+        user = new User(firstName, lastName, email, passwordEncoder.encode(password), about, role, source);
+
+        this.userRepository.save(user);
+
+        responseData.put("user", user);
+        response.setResponseCode(AppConstants.CREATED);
+        response.setResponseMessage(AppConstants.MSG_USER_SAVED_SUCCESSFULLY);
+        response.setResponseData(responseData);
 
         logger.info("in UserServiceImpl.save() : {} - end");
 
@@ -372,7 +375,8 @@ public class UserServiceImpl implements UserService {
         String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
-        String role = input.get("role") != null ? (String) input.get("role") : "LOCAL_USER";
+        String role = input.get("role") != null ? (String) input.get("role") : "USER";
+        String source = input.get("source") != null ? (String) input.get("source") : "MANUAL_UPDATE";
 
         User user;
 
@@ -437,9 +441,10 @@ public class UserServiceImpl implements UserService {
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setEmail(email);
-                user.setPassword(password);
+                user.setPassword(passwordEncoder.encode(password));
                 user.setAbout(about);
                 user.setRole(role);
+                user.setSource(source);
 
                 this.userRepository.save(user);
 
@@ -505,7 +510,7 @@ public class UserServiceImpl implements UserService {
 
         Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : 0;
 
-        User user = null;
+        User user;
 
         if (id == 0) {
             responseData.put("user", null);

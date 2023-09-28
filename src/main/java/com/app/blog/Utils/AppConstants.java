@@ -3,25 +3,19 @@ package com.app.blog.Utils;
 public class AppConstants {
 
     // LENGTH
-    public static final int NUM_01 = 1;
-    public static final int NUM_02 = 2;
     public static final int NUM_03 = 3;
     public static final int NUM_04 = 4;
-    public static final int NUM_05 = 5;
     public static final int NUM_06 = 6;
-    public static final int NUM_08 = 8;
-    public static final int NUM_09 = 9;
-    public static final int NUM_10 = 10;
     public static final int NUM_12 = 12;
-    public static final int NUM_14 = 14;
-    public static final int NUM_16 = 16;
-    public static final int NUM_18 = 18;
     public static final int NUM_20 = 20;
     public static final int NUM_60 = 60;
     public static final int NUM_100 = 100;
     public static final int NUM_500 = 500;
 
     // APP VARIABLES
+    public static final String VERIFICATION_TOKEN_URL_STRING = "verifyRegistration?token=";
+    public static final String HTTP_PREFIX = "http://";
+    public static final String FULL_COLON = ":";
     public static final String ID = "ID";
     public static final String EMAIL = "EMAIL";
     public static final String NAME = "NAME";
@@ -29,6 +23,11 @@ public class AppConstants {
     public static final String CATEGORY = "CATEGORY";
     public static final String POST = "POST";
     public static final String COMMENT = "COMMENT";
+
+    // APP COLLECTION VARIABLES
+    public static final String[] WHITE_LIST_URLS = {
+            "post/register"
+    };
 
     // EXTERNAL VARIABLES
     public static final String PAGE_NO = "pageNo";
@@ -43,10 +42,11 @@ public class AppConstants {
     public static final String PAGE_SIZE_DEFAULT_VALUE = "5";
 
     // APP VALIDATIONS
-    public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 100 Characters!";
+    public static final String MINMAX_PASSWORD = "Password should contains minimum 6 & maximum 16 Characters!";
     public static final String MINMAX_NAME = "Name should contains minimum 3 & maximum 10 Characters!";
     public static final String MINMAX_ABOUT = "About should contains minimum 10 & maximum 60 Characters!";
     public static final String VALID_ROLE = "Role should not be empty!";
+    public static final String VALID_SOURCE = "Platform should not be empty!";
     public static final String FORMAT_EMAIL = "Email should be in proper Format!";
     public static final String MINMAX_TITLE = "Title should contains minimum 4 & maximum 12 Characters!";
     public static final String MINMAX_CONTENT = "Content should contains minimum 6 & maximum 60 Characters!";
@@ -82,6 +82,7 @@ public class AppConstants {
     public static final String MSG_USER_FOUND_SUCCESSFULLY = "Requested User found Successfully!";
     public static final String MSG_USER_DELETED_SUCCESSFULLY = "Requested User deleted Successfully!";
     public static final String MSG_USER_SAVED_SUCCESSFULLY = "Requested User saved Successfully!";
+    public static final String MSG_USER_REGISTERED_SUCCESSFULLY = "Requested User registered Successfully!";
     public static final String MSG_USER_UPDATED_SUCCESSFULLY = "Requested User updated Successfully!";
     public static final String MSG_USER_EMAIL_ALREADY_AVAILABLE = "Requested Email is already assigned to other User!";
 
@@ -123,4 +124,8 @@ public class AppConstants {
     public static final String MSG_COMMENT_DELETED_SUCCESSFULLY = "Requested Comment deleted Successfully!";
     public static final String MSG_COMMENT_UPDATED_SUCCESSFULLY = "Requested Comment updated Successfully!";
 
+    //    [VERIFICATION TOKEN]
+    public static final String MSG_NO_TOKEN_PROVIDED = "There's no token provided in the request!";
+    public static final String MSG_NO_USER_PROVIDED = "There's no user provided in the request!";
+    public static final String MSG_USER_TOKEN_SAVED_SUCCESSFULLY = "Requested Token saved Successfully!";
 }

@@ -25,13 +25,11 @@ public class User {
     @Column(name = ModelConstants.USER_ID)
     private Long id;
 
-    @NotEmpty
-    @Size(min = 3, max = 10, message = AppConstants.MINMAX_NAME)
+    @NotEmpty(message = AppConstants.MINMAX_NAME)
     @Column(name = ModelConstants.USER_FIRST_NAME)
     private String firstName;
 
-    @NotEmpty
-    @Size(min = 3, max = 10, message = AppConstants.MINMAX_NAME)
+    @NotEmpty(message = AppConstants.MINMAX_NAME)
     @Column(name = ModelConstants.USER_LAST_NAME)
     private String lastName;
 
@@ -39,20 +37,21 @@ public class User {
     @Column(name = ModelConstants.USER_EMAIL)
     private String email;
 
-    @NotEmpty
-    @Size(min = AppConstants.NUM_06, max = AppConstants.NUM_12, message = AppConstants.MINMAX_PASSWORD)
-    @Column(name = ModelConstants.USER_PASSWORD, length = AppConstants.NUM_60)
+    @NotEmpty(message = AppConstants.MINMAX_PASSWORD)
+    @Column(name = ModelConstants.USER_PASSWORD)
     private String password;
 
-    @NotEmpty
-    @Size(min = AppConstants.NUM_10, max = AppConstants.NUM_60, message = AppConstants.MINMAX_ABOUT)
+    @NotEmpty(message = AppConstants.MINMAX_ABOUT)
     @Column(name = ModelConstants.USER_ABOUT, length = AppConstants.NUM_500)
     private String about;
 
-    @NotEmpty
-    @Size(min = AppConstants.NUM_04, max = AppConstants.NUM_16, message = AppConstants.VALID_ROLE)
+    @NotEmpty(message = AppConstants.VALID_ROLE)
     @Column(name = ModelConstants.USER_ROLE)
     private String role;
+
+    @NotEmpty(message = AppConstants.VALID_SOURCE)
+    @Column(name = ModelConstants.USER_SOURCE)
+    private String source;
 
     @OneToMany(mappedBy = ModelConstants.USER, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -62,13 +61,15 @@ public class User {
     @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 
-    public User(String firstName, String lastName, String email, String password, String about, String role) {
+    public User(String firstName, String lastName, String email, String password, String about, String role,
+            String source) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.about = about;
         this.role = role;
+        this.source = source;
     }
 
     public User(String email, String password) {

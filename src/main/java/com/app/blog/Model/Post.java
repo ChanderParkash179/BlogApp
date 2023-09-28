@@ -7,7 +7,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +24,7 @@ public class Post {
     @Column(name = ModelConstants.POST_ID)
     private Long id;
 
-    @NotEmpty
-    @Size(min = AppConstants.NUM_03, max = AppConstants.NUM_20, message = AppConstants.MINMAX_TITLE)
+    @NotEmpty(message = AppConstants.MINMAX_TITLE)
     @Column(name = ModelConstants.POST_TITLE)
     private String title;
 
