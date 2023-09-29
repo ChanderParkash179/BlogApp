@@ -124,7 +124,7 @@ public class AppConstants {
     public static final String MSG_COMMENT_DELETED_SUCCESSFULLY = "Requested Comment deleted Successfully!";
     public static final String MSG_COMMENT_UPDATED_SUCCESSFULLY = "Requested Comment updated Successfully!";
 
-    //    [VERIFICATION TOKEN]
+    // [VERIFICATION TOKEN]
     public static final String MSG_NO_TOKEN_PROVIDED = "There's no token provided in the request!";
     public static final String MSG_NO_USER_PROVIDED = "There's no user provided in the request!";
     public static final String MSG_USER_TOKEN_SAVED_SUCCESSFULLY = "Requested Token saved Successfully!";

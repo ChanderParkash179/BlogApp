@@ -37,39 +37,39 @@ public class UserServiceImpl implements UserService {
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
         String role = input.get("role") != null ? (String) input.get("role") : "USER";
-        String source = input.get("source") != null ? (String) input.get("source") : "API_USER";
+        String source = input.get("source") != null ? (String) input.get("source") : "API";
 
         User user;
 
-        if (firstName == null || firstName.isEmpty()) {
+        if (firstName == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (lastName == null || lastName.isEmpty()) {
+        if (lastName == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (email == null || email.isEmpty()) {
+        if (email == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (password == null || password.isEmpty()) {
+        if (password == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (about == null || about.isEmpty()) {
+        if (about == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_ABOUT_PROVIDED);
@@ -297,7 +297,7 @@ public class UserServiceImpl implements UserService {
         String password = input.get("password") != null ? (String) input.get("password") : null;
         String about = input.get("about") != null ? (String) input.get("about") : null;
         String role = input.get("role") != null ? (String) input.get("role") : "USER";
-        String source = input.get("source") != null ? (String) input.get("source") : "MANUAL_USER";
+        String source = input.get("source") != null ? (String) input.get("source") : "MANUAL";
 
         User user;
 
@@ -369,7 +369,7 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
 
-        Integer id = (Integer) input.get("id") != 0 ? (Integer) input.get("id") : 0;
+        Integer id = input.get("id") != null ? (Integer) input.get("id") : 0;
         String email = input.get("email") != null ? (String) input.get("email") : null;
         String firstName = input.get("firstName") != null ? (String) input.get("firstName") : null;
         String lastName = input.get("lastName") != null ? (String) input.get("lastName") : null;
@@ -387,28 +387,28 @@ public class UserServiceImpl implements UserService {
             response.setResponseData(responseData);
             return response;
         }
-        if (firstName == null || firstName.isEmpty()) {
+        if (firstName == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_FIRST_NAME_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (lastName == null || lastName.isEmpty()) {
+        if (lastName == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_LAST_NAME_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (email == null || email.isEmpty()) {
+        if (email == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_EMAIL_PROVIDED);
             response.setResponseData(responseData);
             return response;
         }
-        if (password == null || password.isEmpty()) {
+        if (password == null) {
             responseData.put("user", null);
             response.setResponseCode(AppConstants.NOT_FOUND);
             response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
@@ -426,44 +426,37 @@ public class UserServiceImpl implements UserService {
         user = this.userRepository.findById(id.longValue())
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstants.USER, AppConstants.ID, id.toString()));
 
-        if (user == null) {
-            responseData.put("user", null);
-            response.setResponseCode(AppConstants.NOT_FOUND);
-            response.setResponseMessage(AppConstants.MSG_USER_NOT_AVAILABLE);
+        User emailUser = this.userRepository.findByEmail(email) != null ? this.userRepository.findByEmail(email) : null;
+
+        if (emailUser == null && user.getId() == id.longValue()) {
+
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setAbout(about);
+            user.setRole(role);
+            user.setSource(source);
+
+            this.userRepository.save(user);
+
+            responseData.put("user", user);
+            response.setResponseCode(AppConstants.CREATED);
+            response.setResponseMessage(AppConstants.MSG_USER_UPDATED_SUCCESSFULLY);
+            response.setResponseData(responseData);
+
+        } else {
+            responseData.put("user", emailUser);
+            response.setResponseCode(AppConstants.INTERNAL_SERVER_ERROR);
+            response.setResponseMessage(AppConstants.MSG_USER_EMAIL_ALREADY_AVAILABLE);
             response.setResponseData(responseData);
             return response;
-        } else {
-            User emailAvailable = this.userRepository.findByEmail(email) != null
-                    ? this.userRepository.findByEmail(email)
-                    : null;
-
-            if (emailAvailable == null) {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email);
-                user.setPassword(passwordEncoder.encode(password));
-                user.setAbout(about);
-                user.setRole(role);
-                user.setSource(source);
-
-                this.userRepository.save(user);
-
-                responseData.put("user", user);
-                response.setResponseCode(AppConstants.CREATED);
-                response.setResponseMessage(AppConstants.MSG_USER_UPDATED_SUCCESSFULLY);
-                response.setResponseData(responseData);
-            } else {
-                responseData.put("user", emailAvailable);
-                response.setResponseCode(AppConstants.INTERNAL_SERVER_ERROR);
-                response.setResponseMessage(AppConstants.MSG_USER_EMAIL_ALREADY_AVAILABLE);
-                response.setResponseData(responseData);
-                return response;
-            }
         }
 
         logger.info("in UserServiceImpl.update() : {} - end");
 
         return response;
+
     }
 
     @Override
