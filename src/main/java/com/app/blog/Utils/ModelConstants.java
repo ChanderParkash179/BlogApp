@@ -36,12 +36,9 @@ public class ModelConstants {
     public static final String COMMENT_CONTENT = "comment_content";
     public static final String COMMENT = "comment";
 
-    // [VERIFICATION TOKEN]
-    public static final String VERIFICATION_TOKEN_TABLE = "VERIFICATION_TOKEN";
-    public static final int TOKEN_EXPIRATION_TIME_VALUE = 10;
-    public static final String TOKEN_ID = "token_id";
-    public static final String TOKEN_NAME = "token";
-    public static final String TOKEN_EXPIRATION_TIME = "expiration_time";
-    public static final String TOKEN_FOREIGN_KEY = "FK_USER_VERIFY_TOKEN";
-
+    // [ROLE]
+    public static final String ROLE = "role";
+    public static final String ROLE_TABLE = "ROLE";
+    public static final String ROLE_ID = "role_id";
+    public static final String ROLE_NAME = "role_name";
 }

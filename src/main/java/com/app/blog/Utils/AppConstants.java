@@ -23,10 +23,14 @@ public class AppConstants {
     public static final String CATEGORY = "CATEGORY";
     public static final String POST = "POST";
     public static final String COMMENT = "COMMENT";
+    public static final int JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
     // APP COLLECTION VARIABLES
     public static final String[] WHITE_LIST_URLS = {
-            "post/register"
+            "/api/blog/user/auth/post/login",
+            "/api/blog/user/auth/post/register",
+            "/api/blog/user/auth/role/post/save",
+            "/api/blog/user/auth/add/role/post/save"
     };
 
     // EXTERNAL VARIABLES
@@ -70,18 +74,27 @@ public class AppConstants {
     public static final String MSG_NO_ID_AVAILABLE = "There's no id available against the provided request!";
     public static final String MSG_NO_ID_PROVIDED = "There's no id provided in the request!";
     public static final String MSG_EMAIL_AVAILABLE = "Requested email is available already!";
+    public static final String MSG_ROLE_AVAILABLE = "Requested role is available already!";
     public static final String MSG_NO_EMAIL_AVAILABLE = "There's no email available against the provided request!";
+    public static final String MSG_NO_USERNAME_AVAILABLE = "There's no username available against the provided request!";
+    public static final String MSG_NO_ROLE_AVAILABLE = "There's no role available against the provided request!";
+    public static final String MSG_ROLE_ADDED_TO_USER = "role successfully added to the requested User!";
     public static final String MSG_NO_EMAIL_PROVIDED = "There's no email provided in the request!";
+    public static final String MSG_NO_USERNAME_PROVIDED = "There's no username provided in the request!";
     public static final String MSG_NO_FIRST_NAME_PROVIDED = "There's no first name in the request!";
     public static final String MSG_NO_LAST_NAME_PROVIDED = "There's no last name in the request!";
     public static final String MSG_NO_FIRST_NAME_AVAILABLE = "There's no user available against the provided requested name!";
     public static final String MSG_NO_LAST_NAME_AVAILABLE = "There's no user available against the provided requested name!";
     public static final String MSG_NO_PASSWORD_PROVIDED = "There's no password provided in the request!";
     public static final String MSG_NO_ABOUT_PROVIDED = "There's no about provided in the request!";
+    public static final String MSG_NO_ROLE_PROVIDED = "There's no role provided in the request!";
     public static final String MSG_USER_NOT_AVAILABLE = "Requested User not available!";
     public static final String MSG_USER_FOUND_SUCCESSFULLY = "Requested User found Successfully!";
+    public static final String MSG_USER_LOGIN_SUCCESSFULLY = "Requested User login Successfully!";
+    public static final String MSG_TOKEN_GENERATED_SUCCESSFULLY = "Requested Token generated Successfully!";
     public static final String MSG_USER_DELETED_SUCCESSFULLY = "Requested User deleted Successfully!";
     public static final String MSG_USER_SAVED_SUCCESSFULLY = "Requested User saved Successfully!";
+    public static final String MSG_ROLE_SAVED_SUCCESSFULLY = "Requested Role saved Successfully!";
     public static final String MSG_USER_REGISTERED_SUCCESSFULLY = "Requested User registered Successfully!";
     public static final String MSG_USER_UPDATED_SUCCESSFULLY = "Requested User updated Successfully!";
     public static final String MSG_USER_EMAIL_ALREADY_AVAILABLE = "Requested Email is already assigned to other User!";
