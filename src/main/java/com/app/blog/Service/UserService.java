@@ -6,10 +6,6 @@ import java.util.*;
 
 public interface UserService {
 
-    Response register(Map<String, Object> input);
-
-    Response authenticate(Map<String, Object> input);
-
     Response getById(Map<String, Object> input);
 
     Response getByFirstName(Map<String, Object> input);
@@ -25,9 +21,5 @@ public interface UserService {
     Response list();
 
     Response delete(Map<String, Object> input);
-
-    Response saveRole(Map<String, Object> input);
-
-    Response addRoleToUser(Map<String, Object> input);
 
 }

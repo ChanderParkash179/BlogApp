@@ -24,7 +24,9 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] WHITE_LIST_URLS = AppConstants.WHITE_LIST_URLS;
+    private static final String[] ADMIN_WHITE_LIST_URLS = AppConstants.ADMIN_WHITE_LIST_URLS;
+    private static final String[] NORMAL_WHITE_LIST_URLS = AppConstants.NORMAL_WHITE_LIST_URLS;
+    private static final String[] ACCESS_WHITE_LIST_URLS = AppConstants.ACCESSABLE_WHITE_LIST_URLS;
 
     private final CustomUserDetailService customUserDetailService;
 
@@ -36,7 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests()
-                .antMatchers(WHITE_LIST_URLS).permitAll()
+                .antMatchers(ADMIN_WHITE_LIST_URLS).hasRole(AppConstants.ADMIN)
+                .antMatchers(NORMAL_WHITE_LIST_URLS).hasRole(AppConstants.NORMAL)
+                .antMatchers(ACCESS_WHITE_LIST_URLS).permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -1,6 +1,6 @@
 package com.app.blog.Controller;
 
-import com.app.blog.Service.UserService;
+import com.app.blog.Service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,29 +22,29 @@ import java.util.Map;
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("post/login")
     private ResponseEntity<?> login(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in AuthController.login() : {}");
-        return new ResponseEntity<>(this.userService.authenticate(request), HttpStatus.OK);
+        return new ResponseEntity<>(this.authService.authenticate(request), HttpStatus.OK);
     }
 
     @PostMapping("post/register")
     private ResponseEntity<?> register(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in AuthController.register() : {}");
-        return new ResponseEntity<>(this.userService.register(request), HttpStatus.OK);
+        return new ResponseEntity<>(this.authService.register(request), HttpStatus.OK);
     }
 
     @PostMapping("role/post/save")
     private ResponseEntity<?> addRole(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in AuthController.addRole() : {}");
-        return new ResponseEntity<>(this.userService.saveRole(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.authService.saveRole(request), HttpStatus.CREATED);
     }
 
     @PostMapping("add/role/post/save")
     private ResponseEntity<?> addRoleToUser(@Valid @RequestBody Map<String, Object> request) {
         logger.info("in AuthController.addRoleToUser() : {}");
-        return new ResponseEntity<>(this.userService.addRoleToUser(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.authService.addRoleToUser(request), HttpStatus.CREATED);
     }
 }
