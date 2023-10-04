@@ -1,6 +1,7 @@
 package com.app.blog.Service.Implementation;
 
 import com.app.blog.Entity.Response;
+import com.app.blog.Exception.ApiException;
 import com.app.blog.Model.Role;
 import com.app.blog.Model.User;
 import com.app.blog.Repository.RoleRepository;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -131,53 +133,53 @@ public class AuthServiceImpl implements AuthService {
         String username = input.get("username") != null ? (String) input.get("username") : null;
         String password = input.get("password") != null ? (String) input.get("password") : null;
 
-        try {
-            if (username == null || username.isEmpty()) {
-                responseData.put("jwtResponse", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_USERNAME_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            if (password == null || password.isEmpty()) {
-                responseData.put("jwtResponse", null);
-                response.setResponseCode(AppConstants.NOT_FOUND);
-                response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
-                response.setResponseData(responseData);
-                return response;
-            }
-
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
-                    password);
-
-            this.authenticationManager.authenticate(authenticationToken);
-
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            String token = this.jwtTokenHelper.generateToken(userDetails);
-
-            Map<String, Object> jwtAuthResponse = new HashMap<>();
-            jwtAuthResponse.put("token", token);
-
-            responseData.put("jwtResponse", jwtAuthResponse);
-            response.setResponseCode(AppConstants.OK);
-            response.setResponseMessage(AppConstants.MSG_TOKEN_GENERATED_SUCCESSFULLY);
+        if (username == null || username.isEmpty()) {
+            responseData.put("jwtResponse", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_USERNAME_PROVIDED);
             response.setResponseData(responseData);
-
-        } catch (Exception ex) {
-            logger.error(String.valueOf(ex));
-            logger.error("in AuthServiceImpl.authenticate() : {} - error");
-            ex.printStackTrace();
+            return response;
         }
+
+        if (password == null || password.isEmpty()) {
+            responseData.put("jwtResponse", null);
+            response.setResponseCode(AppConstants.NOT_FOUND);
+            response.setResponseMessage(AppConstants.MSG_NO_PASSWORD_PROVIDED);
+            response.setResponseData(responseData);
+            return response;
+        }
+
+        authenticateUser(username, password);
+
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+        String token = this.jwtTokenHelper.generateToken(userDetails);
+
+        Map<String, Object> jwtAuthResponse = new HashMap<>();
+        jwtAuthResponse.put("token", token);
+
+        responseData.put("jwtResponse", jwtAuthResponse);
+        response.setResponseCode(AppConstants.OK);
+        response.setResponseMessage(AppConstants.MSG_TOKEN_GENERATED_SUCCESSFULLY);
+        response.setResponseData(responseData);
 
         logger.info("in AuthServiceImpl.authenticate() : {} - end");
 
         return response;
     }
 
+    private void authenticateUser(String username, String password) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,
+                password);
+        try {
+            this.authenticationManager.authenticate(authenticationToken);
+        } catch (BadCredentialsException ex) {
+            throw new ApiException(AppConstants.MSG_INVALID_CREDENTIALS);
+        }
+    }
+
     @Override
     public Response saveRole(Map<String, Object> input) {
-        logger.info("in UserServiceImpl.saveRole() : {} - start");
+        logger.info("in AuthServiceImpl.saveRole() : {} - start");
 
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
@@ -215,14 +217,14 @@ public class AuthServiceImpl implements AuthService {
         response.setResponseMessage(AppConstants.MSG_ROLE_SAVED_SUCCESSFULLY);
         response.setResponseData(responseData);
 
-        logger.info("in UserServiceImpl.saveRole() : {} - end");
+        logger.info("in AuthServiceImpl.saveRole() : {} - end");
 
         return response;
     }
 
     @Override
     public Response addRoleToUser(Map<String, Object> input) {
-        logger.info("in UserServiceImpl.addRoleToUser() : {} - start");
+        logger.info("in AuthServiceImpl.addRoleToUser() : {} - start");
 
         Map<String, Object> responseData = new HashMap<>();
         Response response = new Response();
@@ -273,6 +275,8 @@ public class AuthServiceImpl implements AuthService {
         response.setResponseCode(AppConstants.OK);
         response.setResponseMessage(AppConstants.MSG_ROLE_ADDED_TO_USER);
         response.setResponseData(responseData);
+
+        logger.info("in AuthServiceImpl.saveRole() : {} - end");
 
         return response;
     }

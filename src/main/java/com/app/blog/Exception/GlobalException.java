@@ -22,6 +22,15 @@ public class GlobalException {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<Response> apiException(ApiException ex) {
+        Response response = new Response();
+        response.setResponseCode(AppConstants.BAD_REQUEST);
+        response.setResponseMessage(ex.getMessage());
+        response.setResponseData(null);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Response> constraintViolationException(ConstraintViolationException ex) {
         Response response = new Response();

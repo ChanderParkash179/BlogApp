@@ -18,7 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/blog/user/auth/")
+@RequestMapping("api/blog/auth/")
 public class AuthController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

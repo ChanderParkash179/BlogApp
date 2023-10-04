@@ -80,6 +80,7 @@ public class AppConstants {
         public static final String MSG_NO_FIRST_NAME_AVAILABLE = "There's no user available against the provided requested name!";
         public static final String MSG_NO_LAST_NAME_AVAILABLE = "There's no user available against the provided requested name!";
         public static final String MSG_NO_PASSWORD_PROVIDED = "There's no password provided in the request!";
+        public static final String MSG_INVALID_CREDENTIALS = "Invalid Username or Password Credentials provided!";
         public static final String MSG_NO_ABOUT_PROVIDED = "There's no about provided in the request!";
         public static final String MSG_NO_ROLE_PROVIDED = "There's no role provided in the request!";
         public static final String MSG_USER_NOT_AVAILABLE = "Requested User not available!";
@@ -148,9 +149,9 @@ public class AppConstants {
         };
 
         public static final String[] ACCESSABLE_WHITE_LIST_URLS = {
-                        "/api/blog/user/auth/post/login",
-                        "/api/blog/user/auth/post/register",
-                        "/api/blog/user/auth/role/post/save",
-                        "/api/blog/user/auth/add/role/post/save"
+                        "/api/blog/auth/post/login",
+                        "/api/blog/auth/post/register",
+                        "/api/blog/auth/role/post/save",
+                        "/api/blog/auth/add/role/post/save"
         };
 }
